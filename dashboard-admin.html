@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Panel de Administración - Oggun Gym. Control de ingresos, registros de membresías y seguimiento de pagos.">
+  <title>Panel de Administración | Oggun Gym</title>
+  
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-body">
+
+  <!-- Private Header / Nav -->
+  <header class="header scrolled">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo">
+        <img src="oggun_logo.png" alt="Oggun Team Logo" class="logo-img">
+      </a>
+      
+      <div class="member-header-info">
+        <span class="member-status-badge admin-badge"><i class="fas fa-lock"></i> ADMINISTRADOR</span>
+        <span class="member-name">Staff Oggun</span>
+      </div>
+      
+      <div class="nav-cta">
+        <a href="#" class="btn btn-secondary btn-logout" id="dashboard-logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Salir
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Container -->
+  <main class="dashboard-container container">
+    <!-- Admin Hero -->
+    <section class="db-welcome-card reveal active" style="background: linear-gradient(135deg, #16241b 0%, #0c0e12 100%); border-color: rgba(34,197,94,0.3);">
+      <div class="welcome-text">
+        <h1>Centro de Control de la Forja</h1>
+        <p>Gestión administrativa de socios, facturación mensual y control de membresías.</p>
+        <p class="last-login-text">Servidor activo y sincronizado | Versión 2.4.0</p>
+      </div>
+      <div class="welcome-stats" style="grid-template-cols: repeat(4, 1fr);">
+        <div class="stat-box">
+          <span class="stat-val" id="total-members-metric">142</span>
+          <span class="stat-lbl">Miembros Activos</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val">$24,850</span>
+          <span class="stat-lbl">Ingresos del Mes</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val">12</span>
+          <span class="stat-lbl">Pagos Pendientes</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val">4.9 / 5</span>
+          <span class="stat-lbl">Valoración Media</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Section -->
+    <section class="admin-section reveal active" style="margin-top: 2rem;">
+      <div class="admin-controls-row">
+        <div class="search-bar-wrapper" style="max-width: 400px; flex-grow: 1;">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="admin-search-input" placeholder="Buscar miembro por nombre, correo o plan...">
+        </div>
+        <div class="filter-actions">
+          <button class="btn btn-secondary filter-admin-btn active" data-filter="all">Todos</button>
+          <button class="btn btn-secondary filter-admin-btn" data-filter="pagado"><i class="fas fa-circle-check" style="color: #10b981;"></i> Pagados</button>
+          <button class="btn btn-secondary filter-admin-btn" data-filter="pendiente"><i class="fas fa-circle-xmark" style="color: #ef4444;"></i> Pendientes</button>
+        </div>
+        <button class="btn btn-primary" id="add-member-mock-btn"><i class="fas fa-user-plus"></i> Registrar Socio</button>
+      </div>
+
+      <!-- Member Registry Table -->
+      <div class="progress-table-wrapper" style="margin-top: 1.5rem;">
+        <div class="table-header-flex" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.01);">
+          <h3 style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;"><i class="fas fa-users-gear"></i> Registro General de Inscritos y Pagos</h3>
+          <span class="table-count" id="table-count-badge">Mostrando 6 registros</span>
+        </div>
+        <table class="progress-table" id="admin-members-table">
+          <thead>
+            <tr>
+              <th>Miembro</th>
+              <th>Contacto</th>
+              <th>Fecha Registro</th>
+              <th>Tipo de Plan</th>
+              <th>Monto</th>
+              <th>Estado Pago</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-status="pagado">
+              <td>
+                <div class="member-user-flex" style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div class="member-avatar" style="width: 36px; height: 36px; background: rgba(34,197,94,0.1); border: 1px solid var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-light);">JP</div>
+                  <strong>Juan Pérez</strong>
+                </div>
+              </td>
+              <td>juan.perez@gmail.com</td>
+              <td>2026-06-18</td>
+              <td><span class="badge-plan-type" style="background: rgba(34,197,94,0.1); color: var(--primary-light); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Plan Personalizado</span></td>
+              <td class="highlight-white">$500.00</td>
+              <td><span class="payment-status-badge paid"><i class="fas fa-check-circle"></i> Pagado</span></td>
+              <td>
+                <div class="admin-actions-flex" style="display: flex; gap: 0.5rem;">
+                  <button class="btn-action-table chat-wa" title="Enviar WhatsApp" onclick="window.open('https://wa.me/525576400882?text=Hola%20Juan,%20te%20escribimos%20de%20Oggun%20Gym%20para...', '_blank')"><i class="fab fa-whatsapp"></i></button>
+                  <button class="btn-action-table edit-member" title="Editar datos"><i class="fas fa-edit"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr data-status="pagado">
+              <td>
+                <div class="member-user-flex" style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div class="member-avatar" style="width: 36px; height: 36px; background: rgba(34,197,94,0.1); border: 1px solid var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-light);">MG</div>
+                  <strong>María Gómez</strong>
+                </div>
+              </td>
+              <td>maria.g@hotmail.com</td>
+              <td>2026-06-15</td>
+              <td><span class="badge-plan-type" style="background: rgba(34,197,94,0.1); color: var(--primary-light); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Membresía Mensual</span></td>
+              <td class="highlight-white">$350.00</td>
+              <td><span class="payment-status-badge paid"><i class="fas fa-check-circle"></i> Pagado</span></td>
+              <td>
+                <div class="admin-actions-flex" style="display: flex; gap: 0.5rem;">
+                  <button class="btn-action-table chat-wa" title="Enviar WhatsApp" onclick="window.open('https://wa.me/525576400882?text=Hola%20Maria,%20te%20escribimos%20de%20Oggun%20Gym...', '_blank')"><i class="fab fa-whatsapp"></i></button>
+                  <button class="btn-action-table edit-member" title="Editar datos"><i class="fas fa-edit"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr data-status="pendiente">
+              <td>
+                <div class="member-user-flex" style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div class="member-avatar" style="width: 36px; height: 36px; background: rgba(239,68,68,0.1); border: 1px solid #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #f87171;">AM</div>
+                  <strong>Ana Martínez</strong>
+                </div>
+              </td>
+              <td>ana.mtz@gmail.com</td>
+              <td>2026-06-12</td>
+              <td><span class="badge-plan-type" style="background: rgba(34,197,94,0.1); color: var(--primary-light); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Plan Personalizado</span></td>
+              <td class="highlight-white">$500.00</td>
+              <td><span class="payment-status-badge pending"><i class="fas fa-clock"></i> Pendiente</span></td>
+              <td>
+                <div class="admin-actions-flex" style="display: flex; gap: 0.5rem;">
+                  <button class="btn-action-table chat-wa warning" title="Cobrar por WhatsApp" onclick="window.open('https://wa.me/525576400882?text=Hola%20Ana,%20recuerda%20que%20tu%20membres%C3%ADa%20en%20Oggun%20Gym%20por%20$500%20est%C3%A1%20pendiente...', '_blank')"><i class="fab fa-whatsapp"></i></button>
+                  <button class="btn-action-table toggle-payment" title="Marcar como Pagado"><i class="fas fa-check"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr data-status="pagado">
+              <td>
+                <div class="member-user-flex" style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div class="member-avatar" style="width: 36px; height: 36px; background: rgba(34,197,94,0.1); border: 1px solid var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-light);">CR</div>
+                  <strong>Carlos Ruiz</strong>
+                </div>
+              </td>
+              <td>carlos.fit@gmail.com</td>
+              <td>2026-06-20</td>
+              <td><span class="badge-plan-type" style="background: rgba(255,255,255,0.05); color: var(--text-muted); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Pase Diario</span></td>
+              <td class="highlight-white">$40.00</td>
+              <td><span class="payment-status-badge paid"><i class="fas fa-check-circle"></i> Pagado</span></td>
+              <td>
+                <div class="admin-actions-flex" style="display: flex; gap: 0.5rem;">
+                  <button class="btn-action-table chat-wa" title="Enviar WhatsApp" onclick="window.open('https://wa.me/525576400882?text=Hola%20Carlos,%20gracias%20por%20entrenar%20hoy...', '_blank')"><i class="fab fa-whatsapp"></i></button>
+                  <button class="btn-action-table edit-member" title="Editar datos"><i class="fas fa-edit"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr data-status="pagado">
+              <td>
+                <div class="member-user-flex" style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div class="member-avatar" style="width: 36px; height: 36px; background: rgba(34,197,94,0.1); border: 1px solid var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-light);">LH</div>
+                  <strong>Luis Hernández</strong>
+                </div>
+              </td>
+              <td>luis.h@yahoo.com</td>
+              <td>2026-06-19</td>
+              <td><span class="badge-plan-type" style="background: rgba(255,94,0,0.1); color: #fbbf24; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Evaluación Física</span></td>
+              <td class="highlight-white">$15.99</td>
+              <td><span class="payment-status-badge paid"><i class="fas fa-check-circle"></i> Pagado</span></td>
+              <td>
+                <div class="admin-actions-flex" style="display: flex; gap: 0.5rem;">
+                  <button class="btn-action-table chat-wa" title="Enviar WhatsApp" onclick="window.open('https://wa.me/525576400882?text=Hola%20Luis,%20listo%20para%20tu%20evaluaci%C3%B3n...', '_blank')"><i class="fab fa-whatsapp"></i></button>
+                  <button class="btn-action-table edit-member" title="Editar datos"><i class="fas fa-edit"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr data-status="pendiente">
+              <td>
+                <div class="member-user-flex" style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div class="member-avatar" style="width: 36px; height: 36px; background: rgba(239,68,68,0.1); border: 1px solid #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #f87171;">SC</div>
+                  <strong>Sofía Castro</strong>
+                </div>
+              </td>
+              <td>sofia.castro@gmail.com</td>
+              <td>2026-06-05</td>
+              <td><span class="badge-plan-type" style="background: rgba(34,197,94,0.1); color: var(--primary-light); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Membresía Mensual</span></td>
+              <td class="highlight-white">$350.00</td>
+              <td><span class="payment-status-badge pending"><i class="fas fa-clock"></i> Pendiente</span></td>
+              <td>
+                <div class="admin-actions-flex" style="display: flex; gap: 0.5rem;">
+                  <button class="btn-action-table chat-wa warning" title="Cobrar por WhatsApp" onclick="window.open('https://wa.me/525576400882?text=Hola%20Sofia,%20recuerda%20tu%20mensualidad...', '_blank')"><i class="fab fa-whatsapp"></i></button>
+                  <button class="btn-action-table toggle-payment" title="Marcar como Pagado"><i class="fas fa-check"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" style="margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem;">
+    <div class="container">
+      <div class="footer-logo">
+        <a href="index.html" class="logo">
+          <img src="oggun_logo.png" alt="Oggun Team Logo" class="logo-img">
+        </a>
+      </div>
+      <p class="footer-desc">El gimnasio que forja la fuerza real. Sin excusas, sin límites.</p>
+      <p class="footer-copy">&copy; 2026 Oggun Gym. Panel de Control Administrativo Protegido.</p>
+    </div>
+  </footer>
+
+  <!-- Simple script for admin dashboard interactions -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Session check
+      const currentUser = sessionStorage.getItem('oggun_user');
+      if (!currentUser) {
+        window.location.href = 'index.html';
+        return;
+      }
+      
+      const userData = JSON.parse(currentUser);
+      if (userData.role !== 'admin') {
+        window.location.href = 'dashboard-usuario.html';
+        return;
+      }
+
+      // 2. Search filtering
+      const searchInput = document.getElementById('admin-search-input');
+      const tableRows = document.querySelectorAll('#admin-members-table tbody tr');
+      const countBadge = document.getElementById('table-count-badge');
+      const filterButtons = document.querySelectorAll('.filter-admin-btn');
+      
+      let activeFilter = 'all';
+
+      const filterTable = () => {
+        const query = searchInput.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        tableRows.forEach(row => {
+          const rowText = row.innerText.toLowerCase();
+          const rowStatus = row.getAttribute('data-status');
+          
+          const matchesSearch = rowText.includes(query);
+          const matchesFilter = (activeFilter === 'all' || rowStatus === activeFilter);
+
+          if (matchesSearch && matchesFilter) {
+            row.style.display = '';
+            visibleCount++;
+          } else {
+            row.style.display = 'none';
+          }
+        });
+
+        countBadge.textContent = `Mostrando ${visibleCount} de ${tableRows.length} registros`;
+      };
+
+      if (searchInput) {
+        searchInput.addEventListener('input', filterTable);
+      }
+
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeFilter = btn.getAttribute('data-filter');
+          filterTable();
+        });
+      });
+
+      // 3. Mark as paid interaction (Toggle state)
+      const toggleButtons = document.querySelectorAll('.toggle-payment');
+      toggleButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const row = btn.closest('tr');
+          const statusBadge = row.querySelector('.payment-status-badge');
+          
+          if (row.getAttribute('data-status') === 'pendiente') {
+            row.setAttribute('data-status', 'pagado');
+            statusBadge.className = 'payment-status-badge paid';
+            statusBadge.innerHTML = '<i class="fas fa-check-circle"></i> Pagado';
+            btn.innerHTML = '<i class="fas fa-clock"></i>';
+            btn.setAttribute('title', 'Marcar como Pendiente');
+            btn.closest('td').querySelector('.chat-wa').className = 'btn-action-table chat-wa';
+            btn.closest('td').querySelector('.chat-wa').setAttribute('title', 'Enviar WhatsApp');
+          } else {
+            row.setAttribute('data-status', 'pendiente');
+            statusBadge.className = 'payment-status-badge pending';
+            statusBadge.innerHTML = '<i class="fas fa-clock"></i> Pendiente';
+            btn.innerHTML = '<i class="fas fa-check"></i>';
+            btn.setAttribute('title', 'Marcar como Pagado');
+            btn.closest('td').querySelector('.chat-wa').className = 'btn-action-table chat-wa warning';
+            btn.closest('td').querySelector('.chat-wa').setAttribute('title', 'Cobrar por WhatsApp');
+          }
+          filterTable();
+        });
+      });
+
+      // 4. Mock Registrar Socio
+      const addMockBtn = document.getElementById('add-member-mock-btn');
+      if (addMockBtn) {
+        addMockBtn.addEventListener('click', () => {
+          alert('Función de agregar socio. En un entorno real, esto abriría un formulario para persistir el nuevo miembro en la base de datos.');
+        });
+      }
+
+      // 5. Logout action
+      const logoutBtn = document.getElementById('dashboard-logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          sessionStorage.removeItem('oggun_user');
+          window.location.href = 'index.html';
+        });
+      }
+    });
+  </script>
+</body>
+</html>

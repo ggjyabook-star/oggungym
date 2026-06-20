@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Panel Premium de Usuario - Oggun Gym. Accede a tus rutinas de entrenamiento, guías de máquinas y seguimiento físico.">
+  <title>Panel Premium | Oggun Gym</title>
+  
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-body">
+
+  <!-- Private Header / Nav -->
+  <header class="header scrolled">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo">
+        <img src="oggun_logo.png" alt="Oggun Team Logo" class="logo-img">
+      </a>
+      
+      <div class="member-header-info">
+        <span class="member-status-badge"><i class="fas fa-crown"></i> MIEMBRO PREMIUM</span>
+        <span class="member-name" id="user-display-name">Guerrero Oggun</span>
+      </div>
+      
+      <div class="nav-cta">
+        <a href="#" class="btn btn-secondary btn-logout" id="dashboard-logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Salir
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Container -->
+  <main class="dashboard-container container">
+    <!-- Welcome Section -->
+    <section class="db-welcome-card reveal active">
+      <div class="welcome-text">
+        <h1>Bienvenido a la Forja, <span id="welcome-name">Guerrero</span></h1>
+        <p>Tu plan: <strong>Plan Personalizado Premium (Alimentación, Pesaje y Plicometría)</strong></p>
+        <p class="last-login-text">Última evaluación física: Hace 5 días | Próxima cita: En 25 días</p>
+      </div>
+      <div class="welcome-stats">
+        <div class="stat-box">
+          <span class="stat-val">14.5%</span>
+          <span class="stat-lbl">Grasa Corporal</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val">79.2 kg</span>
+          <span class="stat-lbl">Peso Actual</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val">Activo</span>
+          <span class="stat-lbl">Estado de Pago</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Content Layout -->
+    <div class="db-layout">
+      <!-- Sidebar Tabs Navigation -->
+      <aside class="db-sidebar">
+        <button class="db-nav-btn active" data-tab="tab-rutinas">
+          <i class="fas fa-dumbbell"></i> Rutinas de Fuerza
+        </button>
+        <button class="db-nav-btn" data-tab="tab-maquinas">
+          <i class="fas fa-screwdriver-wrench"></i> Guía de Máquinas
+        </button>
+        <button class="db-nav-btn" data-tab="tab-nutricion">
+          <i class="fas fa-apple-whole"></i> Alimentación y Macros
+        </button>
+        <button class="db-nav-btn" data-tab="tab-progreso">
+          <i class="fas fa-chart-line"></i> Progreso y Plicometría
+        </button>
+      </aside>
+
+      <!-- Main Panel Area -->
+      <section class="db-main-panel">
+        
+        <!-- ==========================================
+             TAB 1: RUTINAS DE ENTRENAMIENTO
+             ========================================== -->
+        <div class="db-tab-content active" id="tab-rutinas">
+          <div class="tab-header">
+            <h2>Tus Rutinas Premium</h2>
+            <p>Selecciona tu rutina diaria. Recomendamos alternar grupos musculares y descansar 2 días por semana.</p>
+          </div>
+
+          <!-- Routine selectors -->
+          <div class="routine-selector-tabs">
+            <button class="routine-tab active" data-routine="rutina-espalda">
+              <i class="fas fa-arrows-up-to-line"></i> Espalda (Lats & Densidad)
+            </button>
+            <button class="routine-tab" data-routine="rutina-pecho">
+              <i class="fas fa-shield-halved"></i> Pecho (Potencia)
+            </button>
+            <button class="routine-tab" data-routine="rutina-piernas">
+              <i class="fas fa-circle-down"></i> Piernas (Base de Acero)
+            </button>
+            <button class="routine-tab" data-routine="rutina-brazos">
+              <i class="fas fa-bolt"></i> Hombros & Brazos
+            </button>
+          </div>
+
+          <!-- ROUTINE CONTENTS -->
+          <div class="routine-details-container">
+            
+            <!-- ROUTINE: ESPALDA (Active by default) -->
+            <div class="routine-pane active" id="rutina-espalda">
+              <div class="routine-meta-info">
+                <h3>Rutina de Espalda - Desarrollo de Lats y Densidad</h3>
+                <span class="badge badge-success">Enfoque: Tracción e Hipertrofia</span>
+              </div>
+              <p class="routine-advice"><i class="fas fa-circle-info"></i> <strong>Consejo del Head Coach:</strong> Mantén la columna neutra durante los levantamientos. Inicia el movimiento retrayendo las escápulas, no tirando solo con los bíceps.</p>
+              
+              <div class="exercise-grid">
+                <!-- Ejercicio 1 -->
+                <div class="exercise-card">
+                  <div class="ex-number">01</div>
+                  <div class="ex-details">
+                    <h4>Peso Muerto (Deadlift) en Jaula</h4>
+                    <p class="ex-meta">4 Series x 6, 6, 8, 10 repeticiones | Descanso: 120s</p>
+                    <p class="ex-desc">Realizado en la <strong>Jaula de Potencia</strong>. Fortalece toda la cadena posterior (erectores, glúteos e isquios). Aumenta el peso piramidalmente en cada serie.</p>
+                  </div>
+                </div>
+                <!-- Ejercicio 2 -->
+                <div class="exercise-card">
+                  <div class="ex-number">02</div>
+                  <div class="ex-details">
+                    <h4>Dominadas Pronas (Pull-ups) en Barra Alta</h4>
+                    <p class="ex-meta">4 Series x Al fallo (o 8-10 reps con lastre) | Descanso: 90s</p>
+                    <p class="ex-desc">Agarre ligeramente más ancho que los hombros. Enfócate en llevar el pecho hacia la barra, contrayendo firmemente los dorsales en la parte superior.</p>
+                  </div>
+                </div>
+                <!-- Ejercicio 3 -->
+                <div class="exercise-card">
+                  <div class="ex-number">03</div>
+                  <div class="ex-details">
+                    <h4>Jalón al Pecho en Polea Alta (Lat Pulldown)</h4>
+                    <p class="ex-meta">3 Series x 10, 10, 12 repeticiones | Descanso: 75s</p>
+                    <p class="ex-desc">Usa el equipamiento de <strong>Polea Alta</strong>. Lleva la barra hacia la clavícula con el torso ligeramente inclinado hacia atrás. Ejecución controlada en la fase excéntrica.</p>
+                  </div>
+                </div>
+                <!-- Ejercicio 4 -->
+                <div class="exercise-card">
+                  <div class="ex-number">04</div>
+                  <div class="ex-details">
+                    <h4>Remo en Barra T o Remo con Barra</h4>
+                    <p class="ex-meta">3 Series x 8-10 repeticiones | Descanso: 90s</p>
+                    <p class="ex-desc">Agarre supino para enfatizar la parte baja del dorsal y redondo mayor, o agarre prono para espalda media. Mantén el core apretado para proteger la zona lumbar.</p>
+                  </div>
+                </div>
+                <!-- Ejercicio 5 -->
+                <div class="exercise-card">
+                  <div class="ex-number">05</div>
+                  <div class="ex-details">
+                    <h4>Remo Sentado en Polea con Agarre Cerrado</h4>
+                    <p class="ex-meta">3 Series x 12 repeticiones (Drop set en última serie) | Descanso: 60s</p>
+                    <p class="ex-desc">Lleva el manillar hacia el ombligo. Exprime la espalda media al final del recorrido manteniendo los hombros abajo y atrás.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ROUTINE: PECHO -->
+            <div class="routine-pane" id="rutina-pecho">
+              <div class="routine-meta-info">
+                <h3>Rutina de Pecho - Fuerza Horizontal y Volumen</h3>
+                <span class="badge badge-success">Enfoque: Empuje y Potencia</span>
+              </div>
+              <p class="routine-advice"><i class="fas fa-circle-info"></i> <strong>Consejo del Head Coach:</strong> Haz un arco lumbar controlado y retrae firmemente los hombros contra el banco para proteger los manguitos rotadores.</p>
+              
+              <div class="exercise-grid">
+                <div class="exercise-card">
+                  <div class="ex-number">01</div>
+                  <div class="ex-details">
+                    <h4>Press de Banca Plano con Barra</h4>
+                    <p class="ex-meta">4 Series x 6, 8, 8, 10 repeticiones | Descanso: 120s</p>
+                    <p class="ex-desc">El rey de los ejercicios de empuje. Controla la bajada hasta rozar el esternón y empuja con potencia (leg drive activado).</p>
+                  </div>
+                </div>
+                <div class="exercise-card">
+                  <div class="ex-number">02</div>
+                  <div class="ex-details">
+                    <h4>Press Inclinado con Mancuernas (30 grados)</h4>
+                    <p class="ex-meta">4 Series x 8, 10, 10, 12 repeticiones | Descanso: 90s</p>
+                    <p class="ex-desc">Enfoque en la porción clavicular del pectoral. Mantén las mancuernas a 45 grados respecto al cuerpo para evitar tensión excesiva en el deltoides anterior.</p>
+                  </div>
+                </div>
+                <div class="exercise-card">
+                  <div class="ex-number">03</div>
+                  <div class="ex-details">
+                    <h4>Aperturas en Poleas Cruzadas (Cable Flyes)</h4>
+                    <p class="ex-meta">3 Series x 12-15 repeticiones | Descanso: 60s</p>
+                    <p class="ex-desc">Ejecutado en la <strong>Polea Dual Cruzada</strong>. Cruza las manos en el centro para dar una máxima contracción isométrica al pectoral medio.</p>
+                  </div>
+                </div>
+                <div class="exercise-card">
+                  <div class="ex-number">04</div>
+                  <div class="ex-details">
+                    <h4>Fondos en Paralelas (Chest Dips)</h4>
+                    <p class="ex-meta">3 Series x 10 repeticiones (o al fallo) | Descanso: 90s</p>
+                    <p class="ex-desc">Inclina el torso hacia adelante para transferir el esfuerzo mecánico de los tríceps al pectoral inferior. Baja de forma controlada.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ROUTINE: PIERNAS -->
+            <div class="routine-pane" id="rutina-piernas">
+              <div class="routine-meta-info">
+                <h3>Rutina de Piernas - Base de Acero e Hipertrofia Inferior</h3>
+                <span class="badge badge-success">Enfoque: Fuerza y Resistencia Lumbar</span>
+              </div>
+              <p class="routine-advice"><i class="fas fa-circle-info"></i> <strong>Consejo del Head Coach:</strong> No sacrifiques rango de movimiento por ego. Es mejor bajar profundo y controlado que hacer medias repeticiones pesadas.</p>
+              
+              <div class="exercise-grid">
+                <div class="exercise-card">
+                  <div class="ex-number">01</div>
+                  <div class="ex-details">
+                    <h4>Sentadilla Libre Trasera (Back Squat)</h4>
+                    <p class="ex-meta">4 Series x 6, 6, 8, 10 repeticiones | Descanso: 120s</p>
+                    <p class="ex-desc">Realizada en la <strong>Jaula de Potencia</strong>. Busca romper el paralelo (90°) con las rodillas alineadas con las puntas de los pies.</p>
+                  </div>
+                </div>
+                <div class="exercise-card">
+                  <div class="ex-number">02</div>
+                  <div class="ex-details">
+                    <h4>Prensa de Piernas de 45 Grados</h4>
+                    <p class="ex-meta">4 Series x 10, 10, 12, 15 repeticiones | Descanso: 90s</p>
+                    <p class="ex-desc">Coloca los pies al ancho de los hombros en la parte media. No bloquees por completo las rodillas arriba para evitar accidentes.</p>
+                  </div>
+                </div>
+                <div class="exercise-card">
+                  <div class="ex-number">03</div>
+                  <div class="ex-details">
+                    <h4>Peso Muerto Rumano con Mancuernas o Barra</h4>
+                    <p class="ex-meta">3 Series x 10-12 repeticiones | Descanso: 90s</p>
+                    <p class="ex-desc">Lleva la cadera hacia atrás manteniendo la espalda recta. Gran estímulo en isquiotibiales y glúteos. Siente el estiramiento.</p>
+                  </div>
+                </div>
+                <div class="exercise-card">
+                  <div class="ex-number">04</div>
+                  <div class="ex-details">
+                    <h4>Extensiones de Cuádriceps (Sillón) + Curl Femoral Tumbado</h4>
+                    <p class="ex-meta">3 Superseries x 12-15 repeticiones cada uno | Descanso: 75s</p>
+                    <p class="ex-desc">Un combo de aislamiento para agotar por completo el tren inferior. Mantén la contracción de 1 segundo arriba en las extensiones.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ROUTINE: BRAZOS -->
+            <div class="routine-pane" id="rutina-brazos">
+              <div class="routine-meta-info">
+                <h3>Rutina de Hombros & Brazos - Construcción de Armadura</h3>
+                <span class="badge badge-success">Enfoque: Bombeo y Definición Estética</span>
+              </div>
+              <p class="routine-advice"><i class="fas fa-circle-info"></i> <strong>Consejo del Head Coach:</strong> Mantén el cuerpo estable sin balancearte. Enfócate en la conexión mente-músculo durante los curls e impulsos.</p>
+              
+              <div class="exercise-grid">
+                <div class="exercise-card">
+                  <div class="ex-number">01</div>
+                  <div class="ex-details">
+                    <h4>Press Militar con Barra de Pie</h4>
+                    <p class="ex-meta">4 Series x 6, 8, 8, 10 repeticiones | Descanso: 90s</p>
+                    <p class="ex-desc">Empuja la barra verticalmente apretando los glúteos y el core para mantener una postura firme y evitar lesiones lumbares.</p>
+                  </div>
+                </div>
+                <div class="exercise-card">
+                  <div class="ex-number">02</div>
+                  <div class="ex-details">
+                    <h4>Elevaciones Laterales con Mancuernas</h4>
+                    <p class="ex-meta">4 Series x 12-15 repeticiones (Última al fallo) | Descanso: 60s</p>
+                    <p class="ex-desc">Brazos ligeramente flexionados. Eleva las mancuernas hacia los lados sin usar la inercia del cuerpo. Estímulo puro para cabeza lateral del deltoides.</p>
+                  </div>
+                </div>
+                <div class="exercise-card">
+                  <div class="ex-number">03</div>
+                  <div class="ex-details">
+                    <h4>Curl de Bíceps Alterno con Mancuernas en Banco Inclinado</h4>
+                    <p class="ex-meta">3 Series x 10 repeticiones por brazo | Descanso: 75s</p>
+                    <p class="ex-desc">La inclinación del banco estira por completo la cabeza larga del bíceps, generando un estímulo de crecimiento insuperable.</p>
+                  </div>
+                </div>
+                <div class="exercise-card">
+                  <div class="ex-number">04</div>
+                  <div class="ex-details">
+                    <h4>Extensiones de Tríceps en Polea Alta (Cuerda)</h4>
+                    <p class="ex-meta">3 Series x 12-15 repeticiones | Descanso: 60s</p>
+                    <p class="ex-desc">Abre la cuerda al final de la fase concéntrica para aislar la cabeza lateral del tríceps. Codos pegados a las costillas.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ==========================================
+             TAB 2: GUÍA DE MÁQUINAS DEL GIMNASIO
+             ========================================== -->
+        <div class="db-tab-content" id="tab-maquinas">
+          <div class="tab-header">
+            <h2>Guía Completa de Máquinas de Oggun Gym</h2>
+            <p>Aprende la configuración biomecánica idónea de cada máquina instalada en nuestras instalaciones para entrenar seguro y a máxima intensidad.</p>
+          </div>
+
+          <div class="machines-grid">
+            <!-- Machine 1 -->
+            <div class="machine-card">
+              <div class="machine-icon-header">
+                <i class="fas fa-dumbbell"></i>
+                <span class="machine-zone">Zona de Peso Libre</span>
+              </div>
+              <h3>Jaula de Potencia (Power Rack)</h3>
+              <p class="machine-usage"><strong>Usos Clave:</strong> Sentadillas libres, Press de hombros, Peso muerto rumano, Dominadas.</p>
+              <div class="machine-guide-list">
+                <h5>Configuración Correcta:</h5>
+                <ol>
+                  <li>Ajusta los soportes (J-Cups) a la altura de tus hombros (para sentadillas).</li>
+                  <li>Ubica los soportes de seguridad inferiores a la altura de tu punto más bajo de flexión.</li>
+                  <li>Asegúrate de colocar los sujetadores (mariposas) en ambos extremos de la barra olímpica antes de levantar.</li>
+                </ol>
+              </div>
+              <div class="machine-pro-tip"><i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Úsala siempre si planeas buscar récords personales (PRs) de fuerza de forma autónoma.</div>
+            </div>
+
+            <!-- Machine 2 -->
+            <div class="machine-card">
+              <div class="machine-icon-header">
+                <i class="fas fa-cubes"></i>
+                <span class="machine-zone">Fuerza Integrada</span>
+              </div>
+              <h3>Polea Dual Cruzada (Cable Crossover)</h3>
+              <p class="machine-usage"><strong>Usos Clave:</strong> Cruces de polea para pecho, Extensiones de tríceps, Curl de bíceps, Face pulls.</p>
+              <div class="machine-guide-list">
+                <h5>Configuración Correcta:</h5>
+                <ol>
+                  <li>Regula la altura de los carros deslizantes liberando el perno amarillo y deslizándolo verticalmente.</li>
+                  <li>Selecciona la pila de peso adecuada mediante el pasador de metal (no dejes el pasador a medias).</li>
+                  <li>Engancha el accesorio que desees (cuerda, estribo, barra recta) mediante el mosquetón de seguridad.</li>
+                </ol>
+              </div>
+              <div class="machine-pro-tip"><i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> La polea ofrece tensión mecánica continua a lo largo de todo el rango de movimiento, ideal para bombear sangre al final de la sesión.</div>
+            </div>
+
+            <!-- Machine 3 -->
+            <div class="machine-card">
+              <div class="machine-icon-header">
+                <i class="fas fa-cubes"></i>
+                <span class="machine-zone">Fuerza Integrada</span>
+              </div>
+              <h3>Prensa de Piernas inclinada 45°</h3>
+              <p class="machine-usage"><strong>Usos Clave:</strong> Hipertrofia de cuádriceps, glúteos e isquiotibiales.</p>
+              <div class="machine-guide-list">
+                <h5>Configuración Correcta:</h5>
+                <ol>
+                  <li>Ajusta el respaldo del asiento para que tu espalda baja quede firmemente apoyada sin arquearse.</li>
+                  <li>Coloca tus pies en la plataforma. Libera los frenos laterales empujando levemente hacia arriba.</li>
+                  <li>Baja controladamente asegurándote de que tus rodillas vayan hacia tus hombros sin levantar la cadera del asiento.</li>
+                </ol>
+              </div>
+              <div class="machine-pro-tip"><i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Colocar los pies altos en la plataforma recluta más los glúteos e isquios; colocarlos bajos recluta más los cuádriceps.</div>
+            </div>
+
+            <!-- Machine 4 -->
+            <div class="machine-card">
+              <div class="machine-icon-header">
+                <i class="fas fa-cubes"></i>
+                <span class="machine-zone">Fuerza Integrada</span>
+              </div>
+              <h3>Polea Alta para Jalones (Lat Pulldown)</h3>
+              <p class="machine-usage"><strong>Usos Clave:</strong> Jalones al pecho para amplitud de espalda, extensiones.</p>
+              <div class="machine-guide-list">
+                <h5>Configuración Correcta:</h5>
+                <ol>
+                  <li>Regula la altura de los rodillos acolchados para que presionen tus muslos con firmeza contra el asiento.</li>
+                  <li>Sujeta la barra con el agarre deseado (prono y ancho recomendado para lats) antes de sentarte.</li>
+                  <li>Tira de la barra hacia abajo llevando tus codos hacia las costillas y el pecho apuntando al techo.</li>
+                </ol>
+              </div>
+              <div class="machine-pro-tip"><i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> No des tirones con el cuerpo; controla el peso tanto en la bajada como al regresar la barra.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             TAB 3: RECOMENDACIONES NUTRICIONALES
+             ========================================== -->
+        <div class="db-tab-content" id="tab-nutricion">
+          <div class="tab-header">
+            <h2>Asesoría de Alimentación y Suplementación</h2>
+            <p>Como miembro con plan personalizado, cuentas con recomendaciones específicas basadas en tus objetivos de recomposición corporal y rendimiento.</p>
+          </div>
+
+          <div class="nutrition-grid">
+            <div class="nutrition-card">
+              <h3><i class="fas fa-fire-burner"></i> Macronutrientes y Calorías Diarias</h3>
+              <p class="nut-target">Objetivo Actual: <strong>Déficit Calórico Estructurado (Pérdida de grasa reteniendo masa)</strong></p>
+              
+              <div class="macro-bars">
+                <div class="macro-bar-item">
+                  <div class="macro-info">
+                    <span>Proteína (Construcción muscular)</span>
+                    <strong>160g (2.0g / kg)</strong>
+                  </div>
+                  <div class="bar-outer"><div class="bar-inner protein" style="width: 80%;"></div></div>
+                </div>
+                <div class="macro-bar-item">
+                  <div class="macro-info">
+                    <span>Carbohidratos (Energía de entrenamiento)</span>
+                    <strong>180g (Moderado)</strong>
+                  </div>
+                  <div class="bar-outer"><div class="bar-inner carbs" style="width: 60%;"></div></div>
+                </div>
+                <div class="macro-bar-item">
+                  <div class="macro-info">
+                    <span>Grasas Saludables (Función hormonal)</span>
+                    <strong>65g (Grasas buenas)</strong>
+                  </div>
+                  <div class="bar-outer"><div class="bar-inner fats" style="width: 50%;"></div></div>
+                </div>
+              </div>
+              <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+                Meta calórica recomendada: <strong>1,950 kcal al día</strong>. Consume la mayor parte de tus carbohidratos en las comidas pre y post-entrenamiento para entrenar con fuerza.
+              </p>
+            </div>
+
+            <div class="nutrition-card">
+              <h3><i class="fas fa-capsules"></i> Pauta de Suplementación Recomendada</h3>
+              <div class="supp-list">
+                <div class="supp-item">
+                  <div class="supp-icon"><i class="fas fa-check"></i></div>
+                  <div class="supp-text">
+                    <strong>Creatina Monohidratada (Creapure®)</strong>
+                    <p>Tomar 5 gramos al día todos los días (incluso días de descanso). No requiere fase de carga. Aumenta la fuerza celular y volumen.</p>
+                  </div>
+                </div>
+                <div class="supp-item">
+                  <div class="supp-icon"><i class="fas fa-check"></i></div>
+                  <div class="supp-text">
+                    <strong>Proteína de Suero (Whey Protein)</strong>
+                    <p>1 scoop (25g-30g de proteína) post-entrenamiento o como snack para alcanzar tu requerimiento diario de proteína de manera práctica.</p>
+                  </div>
+                </div>
+                <div class="supp-item">
+                  <div class="supp-icon"><i class="fas fa-check"></i></div>
+                  <div class="supp-text">
+                    <strong>Beta-Alanina (Opcional Pre-entreno)</strong>
+                    <p>3g antes del entrenamiento. Ayuda a tamponar el ácido láctico en series de alta repetición reduciendo la fatiga.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             TAB 4: HISTORIAL DE PROGRESO Y PLICOMETRÍA
+             ========================================== -->
+        <div class="db-tab-content" id="tab-progreso">
+          <div class="tab-header">
+            <h2>Historial Físico y Medición de Pliegues</h2>
+            <p>Control exacto realizado por tu asesor de Oggun Gym mediante pesaje y plicometría (calibrador de grasa corporal).</p>
+          </div>
+
+          <div class="progress-container">
+            <!-- Metrics overview -->
+            <div class="progress-metrics-row">
+              <div class="progress-metric-card">
+                <span>Último Peso Registrado</span>
+                <h3>79.2 kg</h3>
+                <span class="change-indicator negative"><i class="fas fa-arrow-trend-down"></i> -1.3 kg este mes</span>
+              </div>
+              <div class="progress-metric-card">
+                <span>Porcentaje de Grasa</span>
+                <h3>14.5%</h3>
+                <span class="change-indicator negative"><i class="fas fa-arrow-trend-down"></i> -2.1% este mes</span>
+              </div>
+              <div class="progress-metric-card">
+                <span>Masa Magra Estimada</span>
+                <h3>67.7 kg</h3>
+                <span class="change-indicator positive"><i class="fas fa-arrow-trend-up"></i> +0.8 kg este mes</span>
+              </div>
+            </div>
+
+            <!-- Measurements table -->
+            <div class="progress-table-wrapper">
+              <h3 style="margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.5px;"><i class="fas fa-table-list"></i> Historial de Evaluaciones Corporales</h3>
+              <table class="progress-table">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Peso (kg)</th>
+                    <th>Pliegue Pecho (mm)</th>
+                    <th>Pliegue Abdominal (mm)</th>
+                    <th>Pliegue Muslo (mm)</th>
+                    <th>% Grasa (Plicometría)</th>
+                    <th>Asesor Técnico</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2026-06-15</td>
+                    <td>79.2 kg</td>
+                    <td>8 mm</td>
+                    <td>14 mm</td>
+                    <td>11 mm</td>
+                    <td class="highlight-green">14.5%</td>
+                    <td>Ray Mendoza</td>
+                  </tr>
+                  <tr>
+                    <td>2026-05-15</td>
+                    <td>80.5 kg</td>
+                    <td>10 mm</td>
+                    <td>17 mm</td>
+                    <td>13 mm</td>
+                    <td>16.6%</td>
+                    <td>Ray Mendoza</td>
+                  </tr>
+                  <tr>
+                    <td>2026-04-15</td>
+                    <td>81.2 kg</td>
+                    <td>12 mm</td>
+                    <td>20 mm</td>
+                    <td>15 mm</td>
+                    <td>18.2%</td>
+                    <td>Ray Mendoza</td>
+                  </tr>
+                  <tr>
+                    <td>2026-03-15</td>
+                    <td>82.4 kg</td>
+                    <td>14 mm</td>
+                    <td>22 mm</td>
+                    <td>17 mm</td>
+                    <td>19.8%</td>
+                    <td>Ray Mendoza</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer" style="margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem;">
+    <div class="container">
+      <div class="footer-logo">
+        <a href="index.html" class="logo">
+          <img src="oggun_logo.png" alt="Oggun Team Logo" class="logo-img">
+        </a>
+      </div>
+      <p class="footer-desc">El gimnasio que forja la fuerza real. Sin excusas, sin límites.</p>
+      <p class="footer-copy">&copy; 2026 Oggun Gym. Panel de Usuario Premium Protegido.</p>
+    </div>
+  </footer>
+
+  <!-- Simple script for dashboard interactions -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Session check
+      const currentUser = sessionStorage.getItem('oggun_user');
+      if (!currentUser) {
+        // Unauthenticated, redirect to home
+        window.location.href = 'index.html';
+        return;
+      }
+      
+      const userData = JSON.parse(currentUser);
+      if (userData.role !== 'user') {
+        // If admin tries to access user page
+        window.location.href = 'dashboard-admin.html';
+        return;
+      }
+
+      // Display name in UI
+      const welcomeName = document.getElementById('welcome-name');
+      const userDisplayName = document.getElementById('user-display-name');
+      if (welcomeName) welcomeName.textContent = userData.name || 'Guerrero';
+      if (userDisplayName) userDisplayName.textContent = userData.name || 'Guerrero Oggun';
+
+      // 2. Tab switcher (Sidebar nav)
+      const tabButtons = document.querySelectorAll('.db-nav-btn');
+      const tabContents = document.querySelectorAll('.db-tab-content');
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetTabId = btn.getAttribute('data-tab');
+          
+          tabButtons.forEach(b => b.classList.remove('active'));
+          tabContents.forEach(c => c.classList.remove('active'));
+          
+          btn.classList.add('active');
+          const targetContent = document.getElementById(targetTabId);
+          if (targetContent) targetContent.classList.add('active');
+        });
+      });
+
+      // 3. Routine switcher (Inside Tab 1)
+      const routineTabs = document.querySelectorAll('.routine-tab');
+      const routinePanes = document.querySelectorAll('.routine-pane');
+
+      routineTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const targetRoutineId = tab.getAttribute('data-routine');
+          
+          routineTabs.forEach(t => t.classList.remove('active'));
+          routinePanes.forEach(p => p.classList.remove('active'));
+          
+          tab.classList.add('active');
+          const targetPane = document.getElementById(targetRoutineId);
+          if (targetPane) targetPane.classList.add('active');
+        });
+      });
+
+      // 4. Logout action
+      const logoutBtn = document.getElementById('dashboard-logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          sessionStorage.removeItem('oggun_user');
+          window.location.href = 'index.html';
+        });
+      }
+    });
+  </script>
+</body>
+</html>
