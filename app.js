@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
           "Enfoque: Ganancia muscular, fuerza máxima y biomecánica correcta.",
           "Nivel requerido: Intermedio a Avanzado.",
           "Horarios: Lun-Mie-Vie a las 7:00 AM, 6:00 PM y 8:00 PM.",
-          "Entrenador: Carlos Ortiz (Ex-competidor de Powerlifting)."
+          "Entrenador: Eduardo Ayala (Especialista en Biomecánica y Fuerza)."
         ],
         actionText: "Reservar Clase",
         actionClass: "add-reserve-btn",
@@ -299,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
           "Enfoque: Capacidad aeróbica, fuerza explosiva y agilidad.",
           "Nivel requerido: Todos los niveles (ejercicios escalables).",
           "Horarios: Lunes a Sábados a las 6:00 AM, 9:00 AM, 7:00 PM.",
-          "Entrenador: Sofía Reyes (Coach Certificada CF-L2)."
+          "Entrenador: Alan Ayala (Coach de Acondicionamiento Físico)."
         ],
         actionText: "Reservar Clase",
         actionClass: "add-reserve-btn",
@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
           "Enfoque: Defensa personal, coordinación, quema calórica extrema.",
           "Equipamiento: Requiere guantes y vendas (disponibles en recepción).",
           "Horarios: Mar-Jue a las 8:00 AM y 7:00 PM. Sábados 10:00 AM.",
-          "Entrenador: Ray Mendoza (Ex-boxeador profesional)."
+          "Entrenador: Alan Ayala (Coach de Acondicionamiento Físico)."
         ],
         actionText: "Reservar Clase",
         actionClass: "add-reserve-btn",
@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
           "Enfoque: Resistencia cardiovascular, tonificación de piernas y core.",
           "Nivel requerido: Principiante a Avanzado.",
           "Horarios: Lunes a Viernes a las 6:00 AM, 7:00 PM y 8:00 PM.",
-          "Entrenador: Laura Delgado (Especialista en Cardio Indoor)."
+          "Entrenador: Eduardo Ayala (Especialista en Biomecánica y Fuerza)."
         ],
         actionText: "Reservar Clase",
         actionClass: "add-reserve-btn",
