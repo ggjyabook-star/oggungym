@@ -401,7 +401,13 @@
             <p>Como miembro con plan personalizado, cuentas con recomendaciones específicas basadas en tus objetivos de recomposición corporal y rendimiento.</p>
           </div>
 
-          <div class="nutrition-grid">
+          <!-- Custom Trainer Diet View (Populated via JS) -->
+          <div id="custom-nutrition-view" style="display: none;">
+            <!-- Custom diet assigned by trainer will load here -->
+          </div>
+
+          <!-- Default Nutrition View -->
+          <div id="default-nutrition-view" class="nutrition-grid">
             <div class="nutrition-card">
               <h3><i class="fas fa-fire-burner"></i> Macronutrientes y Calorías Diarias</h3>
               <p class="nut-target">Objetivo Actual: <strong>Déficit Calórico Estructurado (Pérdida de grasa reteniendo masa)</strong></p>
@@ -650,6 +656,59 @@
       const userDisplayName = document.getElementById('user-display-name');
       if (welcomeName) welcomeName.textContent = userData.name || 'Guerrero';
       if (userDisplayName) userDisplayName.textContent = userData.name || 'Guerrero Oggun';
+
+      // 1b. Load Custom Nutrition Plan from Trainer
+      const loadCustomNutritionPlan = () => {
+        const storedPlan = localStorage.getItem(`oggun_custom_plan_${userData.email}`);
+        const customView = document.getElementById('custom-nutrition-view');
+        const defaultView = document.getElementById('default-nutrition-view');
+
+        if (storedPlan && customView && defaultView) {
+          const plan = JSON.parse(storedPlan);
+          
+          // Display custom view and hide default
+          defaultView.style.display = 'none';
+          customView.style.display = 'block';
+
+          customView.innerHTML = `
+            <div class="nutrition-card" style="width: 100%; background: var(--gradient-card); border: 1px solid rgba(34, 197, 94, 0.2); box-shadow: 0 4px 20px rgba(34, 197, 94, 0.1); margin-bottom: 2rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                <h3 style="margin: 0; color: var(--primary-light); font-size: 1.3rem; text-align: left;"><i class="fas fa-clipboard-list"></i> Plan Alimenticio Prescrito por tu Coach</h3>
+                <span style="font-size: 0.8rem; background: rgba(34, 197, 94, 0.1); padding: 0.4rem 0.8rem; border-radius: 20px; border: 1px solid var(--primary); color: #fff;">
+                  Asignado por: <strong>${plan.coach}</strong> (${plan.date})
+                </span>
+              </div>
+
+              <!-- Macros Section -->
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.02);">
+                  <span style="display: block; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Calorías Totales</span>
+                  <strong style="font-size: 1.5rem; color: #fff; font-family: var(--font-display);">${plan.calories} kcal</strong>
+                </div>
+                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.02);">
+                  <span style="display: block; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Proteínas</span>
+                  <strong style="font-size: 1.5rem; color: var(--primary-light); font-family: var(--font-display);">${plan.macros.protein}g</strong>
+                </div>
+                <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.02);">
+                  <span style="display: block; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Carbohidratos / Grasas</span>
+                  <strong style="font-size: 1.25rem; color: #fff; font-family: var(--font-display);">C: ${plan.macros.carbs}g | G: ${plan.macros.fats}g</strong>
+                </div>
+              </div>
+
+              <!-- Plan Text -->
+              <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; font-family: monospace; white-space: pre-wrap; font-size: 0.9rem; line-height: 1.6; color: #e5e7eb; max-height: 500px; overflow-y: auto; text-align: left;">${plan.diet}</div>
+            </div>
+          `;
+          
+          // Update body fat in stats header
+          const statsVal = document.querySelectorAll('.stat-box .stat-val');
+          if (statsVal && statsVal.length > 0) {
+            statsVal[0].textContent = `${plan.bf}%`;
+          }
+        }
+      };
+
+      loadCustomNutritionPlan();
 
       // 2. Tab switcher (Sidebar nav)
       const tabButtons = document.querySelectorAll('.db-nav-btn');

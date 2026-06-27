@@ -796,6 +796,8 @@ document.addEventListener('DOMContentLoaded', () => {
           loginNavLink.textContent = 'Mi Panel';
           if (userData.role === 'admin') {
             loginNavLink.href = 'dashboard-admin.html';
+          } else if (userData.role === 'trainer') {
+            loginNavLink.href = 'dashboard-entrenador.html';
           } else {
             loginNavLink.href = 'dashboard-usuario.html';
           }
@@ -872,6 +874,34 @@ document.addEventListener('DOMContentLoaded', () => {
         
         setTimeout(() => {
           window.location.href = 'dashboard-usuario.html';
+        }, 1000);
+
+      } else if (email === 'eduardo@oggungym.com' && password === 'eduardo123') {
+        // Trainer Eduardo Ayala
+        const sessionData = {
+          email: email,
+          name: 'Eduardo Ayala',
+          role: 'trainer'
+        };
+        sessionStorage.setItem('oggun_user', JSON.stringify(sessionData));
+        showToast('¡Acceso Coach concedido! Hola Eduardo.', 'success');
+
+        setTimeout(() => {
+          window.location.href = 'dashboard-entrenador.html';
+        }, 1000);
+
+      } else if (email === 'alan@oggungym.com' && password === 'alan123') {
+        // Trainer Alan Ayala
+        const sessionData = {
+          email: email,
+          name: 'Alan Ayala',
+          role: 'trainer'
+        };
+        sessionStorage.setItem('oggun_user', JSON.stringify(sessionData));
+        showToast('¡Acceso Coach concedido! Hola Alan.', 'success');
+
+        setTimeout(() => {
+          window.location.href = 'dashboard-entrenador.html';
         }, 1000);
 
       } else if (email === 'admin@oggungym.com' && password === 'admin123') {

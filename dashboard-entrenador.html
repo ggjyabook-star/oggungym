@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oggun Gym - Panel de Entrenadores</title>
+  <!-- Google Fonts & FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Custom style overrides for trainer dashboard */
+    :root {
+      --primary: #22c55e;
+      --primary-hover: #16a34a;
+      --primary-light: #4ade80;
+      --bg-dark: #07080a;
+      --bg-card: #0d0f13;
+      --text-white: #ffffff;
+      --text-muted: #9ca3af;
+      --glass-border: rgba(255, 255, 255, 0.05);
+      --font-display: 'Outfit', sans-serif;
+      --font-sans: 'Montserrat', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      font-family: var(--font-sans);
+      color: var(--text-white);
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .calc-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--glass-border);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .calc-result-box {
+      background: rgba(34, 197, 94, 0.05);
+      border: 1px dashed var(--primary);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      display: none;
+    }
+
+    .calc-result-val {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--primary-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .recommendations-box {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .recommendations-box strong {
+      color: var(--text-white);
+    }
+
+    .macro-bar-flex {
+      display: flex;
+      gap: 8px;
+      margin-top: 1rem;
+    }
+
+    .macro-segment {
+      height: 10px;
+      border-radius: 4px;
+    }
+
+    .macro-segment.protein {
+      background-color: var(--primary);
+    }
+
+    .macro-segment.carbs {
+      background-color: #3b82f6;
+    }
+
+    .macro-segment.fats {
+      background-color: #eab308;
+    }
+  </style>
+</head>
+<body class="dashboard-body">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo">
+        <img src="oggun_logo.png" alt="Oggun Team Logo" class="logo-img">
+      </a>
+      
+      <div class="member-header-info">
+        <span class="member-status-badge" style="background: rgba(34, 197, 94, 0.1); border-color: var(--primary);"><i class="fas fa-user-shield"></i> STAFF ENTRENADOR</span>
+        <span class="member-name" id="trainer-display-name">Coach Oggun</span>
+      </div>
+      
+      <div class="nav-cta">
+        <a href="#" class="btn btn-secondary btn-logout" id="dashboard-logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Salir
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Container -->
+  <main class="dashboard-container container">
+    <!-- Welcome Section -->
+    <section class="db-welcome-card reveal active">
+      <div class="welcome-text">
+        <h1>Forja de Resultados: <span id="welcome-trainer-name">Coach</span></h1>
+        <p>Panel de Evaluación Física y Asignación de Dieta para Socios con Plan Personalizado.</p>
+        <p class="last-login-text" style="color: var(--primary-light);"><i class="fas fa-clock"></i> Sesión activa de Staff Médico / Técnico</p>
+      </div>
+    </section>
+
+    <!-- Dashboard Content Layout -->
+    <div class="db-layout">
+      <!-- Sidebar Tabs Navigation -->
+      <aside class="db-sidebar">
+        <button class="db-nav-btn active" data-tab="tab-socios">
+          <i class="fas fa-users"></i> Control de Socios
+        </button>
+        <button class="db-nav-btn" data-tab="tab-calculadora">
+          <i class="fas fa-calculator"></i> Calculadora & Dieta
+        </button>
+      </aside>
+
+      <!-- Main Panel Area -->
+      <section class="db-main-panel">
+        
+        <!-- ==========================================
+             TAB 1: CONTROL DE SOCIOS
+             ========================================== -->
+        <div class="db-tab-content active" id="tab-socios">
+          <div class="tab-header">
+            <h2>Socios en Plan Personalizado</h2>
+            <p>Lista de clientes que requieren monitoreo mensual de plicometría, macros y dieta.</p>
+          </div>
+
+          <div class="progress-table-wrapper">
+            <div class="table-header-flex" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.01);">
+              <h3 style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;"><i class="fas fa-dumbbell"></i> Clientes Premium Activos</h3>
+              <span class="table-count" id="premium-count-badge">Mostrando 1 socio</span>
+            </div>
+            <table class="progress-table">
+              <thead>
+                <tr>
+                  <th>Socio</th>
+                  <th>Plan</th>
+                  <th>Última Grasa %</th>
+                  <th>Plan de Dieta</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="premium-socios-tbody">
+                <!-- Dynamically loaded -->
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <div class="trainer-avatar" style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; color: #fff;">JP</div>
+                      <div>
+                        <strong>Juan Pérez</strong><br>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">usuario@oggungym.com</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="payment-status-badge paid" style="font-size: 0.75rem;">Personalizado</span></td>
+                  <td id="table-user-bf">14.5%</td>
+                  <td id="table-user-diet-status"><span style="color: var(--primary-light);"><i class="fas fa-check-circle"></i> Asignada</span></td>
+                  <td>
+                    <button class="btn btn-primary" onclick="goToCalculatorTab('usuario@oggungym.com')" style="padding: 0.4rem 0.8rem; font-size: 0.75rem; border-radius: 6px; cursor: pointer;">
+                      <i class="fas fa-calculator"></i> Evaluar / Enviar Dieta
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             TAB 2: CALCULADORA DE GRASA & PLANIFICADOR
+             ========================================== -->
+        <div class="db-tab-content" id="tab-calculadora">
+          <div class="tab-header">
+            <h2>Calculadora de Grasa Corporal & Dieta</h2>
+            <p>Utiliza la fórmula oficial de la Marina de EE.UU. (US Navy) para calcular el porcentaje de grasa mediante medidas antropométricas y definir su dieta.</p>
+          </div>
+
+          <div class="calc-grid">
+            <!-- Formulario de Medición -->
+            <div class="calc-card">
+              <h3 style="font-size: 1.2rem; text-transform: uppercase; margin-bottom: 1.5rem; font-family: var(--font-display); border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;"><i class="fas fa-user-gear"></i> Parámetros del Socio</h3>
+              
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label for="calc-socio" style="display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text-light);">Socio a Evaluar</label>
+                <select id="calc-socio" style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white); font-family: var(--font-sans);" required>
+                  <option value="usuario@oggungym.com">Juan Pérez (usuario@oggungym.com)</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text-light);">Género</label>
+                <div style="display: flex; gap: 1rem; margin-top: 0.3rem;">
+                  <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                    <input type="radio" name="gender" value="male" checked onclick="toggleHipField()" style="accent-color: var(--primary);"> Masculino
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                    <input type="radio" name="gender" value="female" onclick="toggleHipField()" style="accent-color: var(--primary);"> Femenino
+                  </label>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                <div class="form-group">
+                  <label for="calc-weight" style="display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text-light);">Peso (kg)</label>
+                  <input type="number" step="0.1" id="calc-weight" value="79.2" style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white);" required>
+                </div>
+                <div class="form-group">
+                  <label for="calc-height" style="display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text-light);">Altura (cm)</label>
+                  <input type="number" id="calc-height" value="180" style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white);" required>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                <div class="form-group">
+                  <label for="calc-neck" style="display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text-light);">Cuello (cm)</label>
+                  <input type="number" step="0.1" id="calc-neck" value="38" style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white);" required>
+                </div>
+                <div class="form-group">
+                  <label for="calc-waist" style="display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text-light);">Cintura (cm)</label>
+                  <input type="number" step="0.1" id="calc-waist" value="86" style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white);" required>
+                </div>
+              </div>
+
+              <div class="form-group" id="hip-group" style="margin-bottom: 1rem; display: none;">
+                <label for="calc-hip" style="display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text-light);">Cadera (cm)</label>
+                <input type="number" step="0.1" id="calc-hip" value="95" style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white);">
+              </div>
+
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label for="calc-activity" style="display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text-light);">Nivel de Actividad</label>
+                <select id="calc-activity" style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white); font-family: var(--font-sans);">
+                  <option value="1.2">Sedentario (Poco o ningún ejercicio)</option>
+                  <option value="1.375">Moderadamente Activo (3-5 días/sem)</option>
+                  <option value="1.55" selected>Muy Activo (6-7 días/sem pesas)</option>
+                  <option value="1.725">Atleta Profesional (Doble sesión)</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="calc-goal" style="display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text-light);">Meta de Composición</label>
+                <select id="calc-goal" style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white); font-family: var(--font-sans);">
+                  <option value="deficit" selected>Déficit (Quema Grasa / Definición)</option>
+                  <option value="mantenimiento">Mantenimiento (Recomposición)</option>
+                  <option value="superavit">Superávit (Ganancia Muscular / Fuerza)</option>
+                </select>
+              </div>
+
+              <button class="btn btn-primary" onclick="calculateBodyFat()" style="width: 100%; padding: 0.85rem; border-radius: 8px; cursor: pointer;">Calcular Porcentaje de Grasa</button>
+            </div>
+
+            <!-- Panel de Resultados y Envío de Dieta -->
+            <div class="calc-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <h3 style="font-size: 1.25rem; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; font-family: var(--font-display);"><i class="fas fa-clipboard-check"></i> Diagnóstico & Dieta</h3>
+              
+              <!-- Result Box -->
+              <div class="calc-result-box" id="calc-results">
+                <div class="calc-result-val" id="res-bf">14.5%</div>
+                <div style="font-size: 0.95rem; font-weight: 700; text-transform: uppercase; color: var(--text-white); margin-bottom: 0.5rem;" id="res-category">Fitness</div>
+                <div class="recommendations-box" id="res-rec">
+                  <!-- Generated recommendations -->
+                </div>
+              </div>
+
+              <!-- Dieta custom -->
+              <div class="form-group">
+                <label for="diet-plan-text" style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 600; color: var(--text-light); text-align: left;">Plan de Dieta & Suplementación Personalizado</label>
+                <textarea id="diet-plan-text" placeholder="Escribe el desglose de comidas, porciones y suplementación para el socio..." style="width: 100%; padding: 0.85rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white); font-family: var(--font-sans); min-height: 220px; resize: vertical;" required></textarea>
+              </div>
+
+              <button class="btn btn-primary" onclick="sendPlanToMember()" style="padding: 0.85rem; border-radius: 8px; cursor: pointer;"><i class="fas fa-paper-plane"></i> Guardar y Enviar a Socio</button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer" style="margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem;">
+    <div class="container">
+      <div class="footer-logo">
+        <a href="index.html" class="logo">
+          <img src="oggun_logo.png" alt="Oggun Team Logo" class="logo-img">
+        </a>
+      </div>
+      <p class="footer-desc">El gimnasio que forja la fuerza real. Sin excusas, sin límites.</p>
+      <p class="footer-copy">&copy; 2026 Oggun Gym. Panel de Entrenadores Oficial.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Variables for calculation
+    let calculatedBF = 14.5;
+    let calculatedCal = 1950;
+    let macroSplit = { protein: 160, carbs: 180, fats: 65 };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Session check
+      const currentUser = sessionStorage.getItem('oggun_user');
+      if (!currentUser) {
+        window.location.href = 'index.html';
+        return;
+      }
+      
+      const userData = JSON.parse(currentUser);
+      if (userData.role !== 'trainer') {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Display Coach Name
+      const trainerDisplayName = document.getElementById('trainer-display-name');
+      const welcomeTrainerName = document.getElementById('welcome-trainer-name');
+      if (trainerDisplayName) trainerDisplayName.textContent = userData.name || 'Entrenador';
+      if (welcomeTrainerName) welcomeTrainerName.textContent = userData.name || 'Staff Oggun';
+
+      // Load existing user custom diet to textarea if any
+      loadExistingCustomDiet();
+
+      // 2. Tab switching
+      const tabButtons = document.querySelectorAll('.db-nav-btn');
+      const tabContents = document.querySelectorAll('.db-tab-content');
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetTabId = btn.getAttribute('data-tab');
+          
+          tabButtons.forEach(b => b.classList.remove('active'));
+          tabContents.forEach(c => c.classList.remove('active'));
+          
+          btn.classList.add('active');
+          const targetContent = document.getElementById(targetTabId);
+          if (targetContent) targetContent.classList.add('active');
+        });
+      });
+
+      // 3. Logout action
+      const logoutBtn = document.getElementById('dashboard-logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          sessionStorage.removeItem('oggun_user');
+          window.location.href = 'index.html';
+        });
+      }
+    });
+
+    function toggleHipField() {
+      const isFemale = document.querySelector('input[name="gender"]:checked').value === 'female';
+      document.getElementById('hip-group').style.display = isFemale ? 'block' : 'none';
+    }
+
+    function calculateBodyFat() {
+      const gender = document.querySelector('input[name="gender"]:checked').value;
+      const weight = parseFloat(document.getElementById('calc-weight').value);
+      const height = parseFloat(document.getElementById('calc-height').value);
+      const neck = parseFloat(document.getElementById('calc-neck').value);
+      const waist = parseFloat(document.getElementById('calc-waist').value);
+      const activity = parseFloat(document.getElementById('calc-activity').value);
+      const goal = document.getElementById('calc-goal').value;
+
+      if (!weight || !height || !neck || !waist) {
+        alert('Por favor, ingresa todas las medidas.');
+        return;
+      }
+
+      let bf = 0;
+      if (gender === 'male') {
+        // US Navy Formula for Males:
+        // BF = 495 / ( 1.0324 - 0.19077 * log10(waist - neck) + 0.15456 * log10(height) ) - 450
+        const logWaistNeck = Math.log10(waist - neck);
+        const logHeight = Math.log10(height);
+        bf = 495 / (1.0324 - 0.19077 * logWaistNeck + 0.15456 * logHeight) - 450;
+      } else {
+        // Females:
+        const hip = parseFloat(document.getElementById('calc-hip').value) || 95;
+        // BF = 495 / ( 1.29579 - 0.35004 * log10(waist + hip - neck) + 0.22100 * log10(height) ) - 450
+        const logWaistHipNeck = Math.log10(waist + hip - neck);
+        const logHeight = Math.log10(height);
+        bf = 495 / (1.29579 - 0.35004 * logWaistHipNeck + 0.22100 * logHeight) - 450;
+      }
+
+      if (isNaN(bf) || bf < 2 || bf > 60) {
+        alert('Las medidas ingresadas no generan un cálculo coherente. Revisa los valores (cm).');
+        return;
+      }
+
+      calculatedBF = parseFloat(bf.toFixed(1));
+
+      // BMR and TDEE (Harris-Benedict Equation)
+      let bmr = 0;
+      if (gender === 'male') {
+        bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * 25); // Mock age 25
+      } else {
+        bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * 25);
+      }
+
+      let tdee = bmr * activity;
+      let targetCalories = tdee;
+
+      if (goal === 'deficit') {
+        targetCalories = tdee - 500; // standard 500 kcal deficit
+      } else if (goal === 'superavit') {
+        targetCalories = tdee + 300; // lean bulking
+      }
+
+      calculatedCal = Math.round(targetCalories);
+
+      // Macro splits: 2.2g Protein per kg, 20% Fats, remaining Carbs
+      const proteinGrams = Math.round(weight * 2.2);
+      const fatGrams = Math.round((targetCalories * 0.22) / 9);
+      const carbGrams = Math.round((targetCalories - (proteinGrams * 4) - (fatGrams * 9)) / 4);
+
+      macroSplit = {
+        protein: proteinGrams,
+        carbs: carbGrams > 50 ? carbGrams : 50,
+        fats: fatGrams
+      };
+
+      // BF Categories
+      let category = '';
+      if (gender === 'male') {
+        if (calculatedBF < 6) category = 'Grasa Esencial';
+        else if (calculatedBF < 14) category = 'Atleta / Excelente';
+        else if (calculatedBF < 18) category = 'Fitness / Saludable';
+        else if (calculatedBF < 25) category = 'Promedio / Aceptable';
+        else category = 'Obesidad / Alta';
+      } else {
+        if (calculatedBF < 14) category = 'Grasa Esencial';
+        else if (calculatedBF < 21) category = 'Atleta / Excelente';
+        else if (calculatedBF < 25) category = 'Fitness / Saludable';
+        else if (calculatedBF < 32) category = 'Promedio / Aceptable';
+        else category = 'Obesidad / Alta';
+      }
+
+      // Display results
+      document.getElementById('res-bf').textContent = `${calculatedBF}%`;
+      document.getElementById('res-category').textContent = category;
+
+      let recHtml = `
+        <p><strong>Kcal Objetivo:</strong> ${calculatedCal} kcal diarias.</p>
+        <p><strong>Macros Recomendados:</strong></p>
+        <div class="macro-bar-flex">
+          <div class="macro-segment protein" style="flex: ${macroSplit.protein};" title="Proteína: ${macroSplit.protein}g"></div>
+          <div class="macro-segment carbs" style="flex: ${macroSplit.carbs};" title="Carbohidratos: ${macroSplit.carbs}g"></div>
+          <div class="macro-segment fats" style="flex: ${macroSplit.fats};" title="Grasas: ${macroSplit.fats}g"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 5px;">
+          <span style="color: #22c55e;">P: ${macroSplit.protein}g</span>
+          <span style="color: #3b82f6;">C: ${macroSplit.carbs}g</span>
+          <span style="color: #eab308;">G: ${macroSplit.fats}g</span>
+        </div>
+        <p style="margin-top: 1rem;"><strong>Agua:</strong> ~${Math.round(weight * 35 / 1000 * 10) / 10} Litros diarios.</p>
+        <p><strong>Recomendación Técnica:</strong> Mantener fuerza máxima 3-4 días a la semana. Cardio LISS pos-entrenamiento (30 min).</p>
+      `;
+
+      document.getElementById('res-rec').innerHTML = recHtml;
+      document.getElementById('calc-results').style.display = 'block';
+
+      // Autofill starter diet plan in textarea if empty
+      const dietTextarea = document.getElementById('diet-plan-text');
+      if (dietTextarea.value.trim() === '') {
+        const coachName = JSON.parse(sessionStorage.getItem('oggun_user')).name || 'Coach';
+        dietTextarea.value = `PLAN DIETÉTICO DISEÑADO POR ${coachName.toUpperCase()}
+--------------------------------------------------
+Objetivo: ${goal === 'deficit' ? 'Déficit Calórico Estructurado' : goal === 'superavit' ? 'Superávit Calórico (Volumen Limpio)' : 'Recomposición Corporal'}
+Kcal diarias: ${calculatedCal} kcal (P: ${macroSplit.protein}g | C: ${macroSplit.carbs}g | G: ${macroSplit.fats}g)
+
+DESGLOSE DE COMIDAS:
+- Desayuno (7:30 AM):
+  * 4 claras de huevo + 1 huevo entero revueltos con espinacas.
+  * 60g de avena cocida en agua con canela y 1 scoop de Oggun Whey.
+- Media Mañana (11:00 AM):
+  * 1 manzana verde + 30g de almendras enteras.
+- Almuerzo (2:00 PM):
+  * 180g de pechuga de pollo asada o filete de pescado.
+  * 150g de arroz integral al vapor.
+  * Ensalada verde libre con 1 cucharadita de aceite de oliva.
+- Merienda Pos-entrenamiento (6:30 PM):
+  * 1 scoop de Oggun Whey licuado con agua y 1 plátano.
+- Cena (9:00 PM):
+  * 150g de carne de res magra a la plancha.
+  * 120g de camote cocido.
+  * Brócoli al vapor.
+
+SUPLEMENTACIÓN:
+- Creatina Monohidratada: 5g diarios pos-entrenamiento en agua.
+- Multivitamínico: 1 cápsula con el desayuno.`;
+      }
+    }
+
+    function sendPlanToMember() {
+      const email = document.getElementById('calc-socio').value;
+      const dietText = document.getElementById('diet-plan-text').value.trim();
+
+      if (!dietText) {
+        alert('Por favor ingresa o genera la dieta para el socio.');
+        return;
+      }
+
+      const coachName = JSON.parse(sessionStorage.getItem('oggun_user')).name || 'Eduardo Ayala';
+
+      // Create plan object
+      const customPlan = {
+        bf: calculatedBF,
+        calories: calculatedCal,
+        macros: macroSplit,
+        diet: dietText,
+        coach: coachName,
+        date: new Date().toISOString().split('T')[0]
+      };
+
+      // Save to localStorage under user email
+      localStorage.setItem(`oggun_custom_plan_${email}`, JSON.stringify(customPlan));
+
+      // Also update table values if displayed
+      const tblBf = document.getElementById('table-user-bf');
+      const tblStatus = document.getElementById('table-user-diet-status');
+      if (tblBf) tblBf.textContent = `${calculatedBF}%`;
+      if (tblStatus) tblStatus.innerHTML = `<span style="color: var(--primary-light); font-weight:700;"><i class="fas fa-check-circle"></i> Asignada (${customPlan.date})</span>`;
+
+      alert('¡Plan de Dieta y Calculadora guardado con éxito! El socio Juan Pérez podrá visualizarlo al instante desde su panel privado.');
+
+      // Return to first tab
+      const tabBtn = document.querySelector('.db-nav-btn[data-tab="tab-socios"]');
+      if (tabBtn) tabBtn.click();
+    }
+
+    function goToCalculatorTab(email) {
+      document.getElementById('calc-socio').value = email;
+      const tabBtn = document.querySelector('.db-nav-btn[data-tab="tab-calculadora"]');
+      if (tabBtn) {
+        tabBtn.click();
+        loadExistingCustomDiet();
+      }
+    }
+
+    function loadExistingCustomDiet() {
+      const email = document.getElementById('calc-socio').value;
+      const stored = localStorage.getItem(`oggun_custom_plan_${email}`);
+      const textarea = document.getElementById('diet-plan-text');
+      
+      if (stored && textarea) {
+        const plan = JSON.parse(stored);
+        textarea.value = plan.diet;
+        // update result display if plan exists
+        calculatedBF = plan.bf;
+        calculatedCal = plan.calories;
+        macroSplit = plan.macros;
+
+        document.getElementById('res-bf').textContent = `${plan.bf}%`;
+        document.getElementById('res-category').textContent = 'Plan Vigente';
+        
+        let recHtml = `
+          <p><strong>Kcal Activas:</strong> ${plan.calories} kcal.</p>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 5px;">
+            <span style="color: #22c55e;">P: ${plan.macros.protein}g</span>
+            <span style="color: #3b82f6;">C: ${plan.macros.carbs}g</span>
+            <span style="color: #eab308;">G: ${plan.macros.fats}g</span>
+          </div>
+          <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--primary-light);">Plan enviado el: ${plan.date}</p>
+        `;
+        document.getElementById('res-rec').innerHTML = recHtml;
+        document.getElementById('calc-results').style.display = 'block';
+      } else {
+        if (textarea) textarea.value = '';
+        document.getElementById('calc-results').style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
