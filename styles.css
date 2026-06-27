@@ -2959,3 +2959,15 @@ img {
   box-shadow: var(--shadow-lg), 0 10px 30px rgba(34, 197, 94, 0.15);
 }
 
+/* Login Modal Tab Switcher Active State */
+.login-tab-btn.active {
+  background: var(--primary) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+}
+.login-tab-btn:hover:not(.active) {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+

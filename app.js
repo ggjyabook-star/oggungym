@@ -853,7 +853,54 @@ document.addEventListener('DOMContentLoaded', () => {
     loginOverlay.addEventListener('click', closeLoginModal);
   }
 
-  // Login Form Submission
+  // Login Role Tabs Switcher
+  const loginTabBtns = document.querySelectorAll('.login-tab-btn');
+  const credentialsHint = document.getElementById('login-credentials-hint');
+  const emailInput = document.getElementById('login-email');
+  const passwordInput = document.getElementById('login-password');
+
+  if (loginTabBtns && loginTabBtns.length > 0) {
+    loginTabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Toggle active button style
+        loginTabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const role = btn.getAttribute('data-role');
+        
+        // Update credentials helper hint & autofill credentials
+        if (role === 'user') {
+          if (credentialsHint) {
+            credentialsHint.innerHTML = `<p>Premium: <code style="color: var(--primary-light);">usuario@oggungym.com</code> / <code style="color: var(--primary-light);">usuario123</code></p>`;
+          }
+          if (emailInput) emailInput.value = 'usuario@oggungym.com';
+          if (passwordInput) passwordInput.value = 'usuario123';
+        } else if (role === 'trainer') {
+          if (credentialsHint) {
+            credentialsHint.innerHTML = `<p>Eduardo: <code style="color: var(--primary-light);">eduardo@oggungym.com</code> / <code style="color: var(--primary-light);">eduardo123</code></p>
+                                         <p style="margin-top: 0.25rem;">Alan: <code style="color: var(--primary-light);">alan@oggungym.com</code> / <code style="color: var(--primary-light);">alan123</code></p>`;
+          }
+          if (emailInput) emailInput.value = 'eduardo@oggungym.com';
+          if (passwordInput) passwordInput.value = 'eduardo123';
+        } else if (role === 'admin') {
+          if (credentialsHint) {
+            credentialsHint.innerHTML = `<p>Admin: <code style="color: var(--primary-light);">admin@oggungym.com</code> / <code style="color: var(--primary-light);">admin123</code></p>`;
+          }
+          if (emailInput) emailInput.value = 'admin@oggungym.com';
+          if (passwordInput) passwordInput.value = 'admin123';
+        }
+      });
+    });
+
+    // Run first tab click on load to auto-fill
+    // but only if fields are empty
+    const activeTab = document.querySelector('.login-tab-btn.active');
+    if (activeTab && emailInput && emailInput.value === '') {
+      activeTab.click();
+    }
+  }
+
+  // Handle submit
   if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();

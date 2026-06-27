@@ -363,11 +363,18 @@
     <div class="modal-content login-content">
       <button class="close-modal-btn" id="close-login-btn" aria-label="Cerrar Login"><i class="fas fa-times"></i></button>
       <div class="modal-body">
-        <div class="login-header" style="text-align: center; margin-bottom: 2rem;">
+        <div class="login-header" style="text-align: center; margin-bottom: 1.5rem;">
           <img src="oggun_logo.png" alt="Oggun Gym Logo" style="height: 60px; margin-bottom: 1rem;">
           <h3 style="font-family: var(--font-display); text-transform: uppercase; color: var(--text-white);">Acceso a la Forja</h3>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">Ingresa tus credenciales premium o de administrador</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">Selecciona tu rol e ingresa tus credenciales</p>
         </div>
+        
+        <div class="login-tabs-nav" style="display: flex; gap: 5px; margin-bottom: 1.5rem; background: rgba(0,0,0,0.2); padding: 5px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);">
+          <button type="button" class="login-tab-btn active" data-role="user" style="flex: 1; padding: 0.6rem; border: none; background: transparent; color: var(--text-muted); font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 6px; transition: var(--transition-fast);">Socio</button>
+          <button type="button" class="login-tab-btn" data-role="trainer" style="flex: 1; padding: 0.6rem; border: none; background: transparent; color: var(--text-muted); font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 6px; transition: var(--transition-fast);">Entrenador</button>
+          <button type="button" class="login-tab-btn" data-role="admin" style="flex: 1; padding: 0.6rem; border: none; background: transparent; color: var(--text-muted); font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 6px; transition: var(--transition-fast);">Admin</button>
+        </div>
+
         <form id="login-form">
           <div class="form-group">
             <label for="login-email">Correo Electrónico</label>
@@ -379,10 +386,12 @@
           </div>
           <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem; border-radius: 8px;">Entrar a la Forja</button>
         </form>
+
         <div class="login-help" style="margin-top: 1.5rem; text-align: center; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
           <p style="margin-bottom: 0.5rem;"><strong>Credenciales de Prueba:</strong></p>
-          <p>Premium: <code style="color: var(--primary-light);">usuario@oggungym.com</code> / <code style="color: var(--primary-light);">usuario123</code></p>
-          <p style="margin-top: 0.25rem;">Admin: <code style="color: var(--primary-light);">admin@oggungym.com</code> / <code style="color: var(--primary-light);">admin123</code></p>
+          <div id="login-credentials-hint">
+            <p>Premium: <code style="color: var(--primary-light);">usuario@oggungym.com</code> / <code style="color: var(--primary-light);">usuario123</code></p>
+          </div>
         </div>
       </div>
     </div>
