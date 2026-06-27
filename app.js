@@ -907,5 +907,54 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 1000);
     });
   }
+
+  /* ==========================================================================
+     TRAINER FEEDBACK SUBMISSION
+     ========================================================================== */
+  const trainerFeedbackForm = document.getElementById('trainer-feedback-form');
+  if (trainerFeedbackForm) {
+    trainerFeedbackForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const trainer = document.getElementById('feedback-trainer').value;
+      const name = document.getElementById('feedback-name').value.trim();
+      const rating = document.getElementById('feedback-rating').value;
+      const comment = document.getElementById('feedback-comment').value.trim();
+
+      if (!trainer || !name || !comment) {
+        showToast('Por favor completa todos los campos.', 'remove');
+        return;
+      }
+
+      // Create new comment object
+      const newComment = {
+        id: Date.now(),
+        trainer: trainer,
+        user: name,
+        rating: parseInt(rating),
+        comment: comment,
+        date: new Date().toISOString().split('T')[0]
+      };
+
+      // Load existing comments from localStorage
+      let comments = [];
+      try {
+        const stored = localStorage.getItem('oggun_trainer_comments');
+        if (stored) {
+          comments = JSON.parse(stored);
+        }
+      } catch (err) {
+        console.error('Error loading trainer comments', err);
+      }
+
+      // Add to array and save
+      comments.push(newComment);
+      localStorage.setItem('oggun_trainer_comments', JSON.stringify(comments));
+
+      // Show success toast and reset
+      showToast('¡Comentario enviado! Solo visible para el administrador.', 'success');
+      trainerFeedbackForm.reset();
+    });
+  }
 });
 

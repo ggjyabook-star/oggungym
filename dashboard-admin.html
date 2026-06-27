@@ -214,6 +214,29 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Trainer Feedback Table -->
+      <div class="progress-table-wrapper" style="margin-top: 3rem;">
+        <div class="table-header-flex" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.01);">
+          <h3 style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;"><i class="fas fa-comments"></i> Comentarios sobre Entrenadores (Confidencial)</h3>
+          <span class="table-count" id="comments-count-badge">Mostrando 0 comentarios</span>
+        </div>
+        <table class="progress-table" id="admin-comments-table">
+          <thead>
+            <tr>
+              <th>Entrenador</th>
+              <th>Miembro</th>
+              <th>Fecha</th>
+              <th>Calificación</th>
+              <th style="width: 45%;">Comentario / Opinión</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="admin-comments-tbody">
+            <!-- Populated via JavaScript from localStorage -->
+          </tbody>
+        </table>
+      </div>
     </section>
   </main>
 
@@ -333,6 +356,99 @@
           window.location.href = 'index.html';
         });
       }
+
+      // 6. Trainer Comments Management
+      const commentsTbody = document.getElementById('admin-comments-tbody');
+      const commentsCountBadge = document.getElementById('comments-count-badge');
+
+      const renderTrainerComments = () => {
+        if (!commentsTbody) return;
+
+        // Clear tbody
+        commentsTbody.innerHTML = '';
+
+        // Load comments from localStorage
+        let comments = [];
+        try {
+          const stored = localStorage.getItem('oggun_trainer_comments');
+          if (stored) {
+            comments = JSON.parse(stored);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+
+        // Mock some default comments if empty
+        if (comments.length === 0) {
+          comments = [
+            {
+              id: 1,
+              trainer: 'Carlos Ortiz',
+              user: 'Juan Pérez',
+              rating: 5,
+              comment: 'Excelente entrenador. Muy enfocado en la técnica del peso muerto y sentadilla, siempre corrige las posturas y evita lesiones.',
+              date: '2026-06-25'
+            },
+            {
+              id: 2,
+              trainer: 'Sofía Reyes',
+              user: 'María Gómez',
+              rating: 4,
+              comment: 'Las clases de CrossFit son muy dinámicas e intensas. Sofía siempre nos anima a dar el máximo esfuerzo.',
+              date: '2026-06-26'
+            }
+          ];
+          localStorage.setItem('oggun_trainer_comments', JSON.stringify(comments));
+        }
+
+        commentsCountBadge.textContent = `Mostrando ${comments.length} comentarios`;
+
+        comments.forEach(c => {
+          const tr = document.createElement('tr');
+          
+          let stars = '⭐'.repeat(c.rating);
+
+          tr.innerHTML = `
+            <td><strong style="color: var(--primary-light);">${c.trainer}</strong></td>
+            <td class="highlight-white">${c.user}</td>
+            <td>${c.date}</td>
+            <td><span style="font-size: 0.85rem;">${stars} (${c.rating}/5)</span></td>
+            <td style="color: var(--text-light); font-size: 0.9rem; line-height: 1.4;">${c.comment}</td>
+            <td>
+              <button class="btn-action-table delete-comment" data-id="${c.id}" title="Eliminar Comentario" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2); color: #f87171; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          `;
+
+          commentsTbody.appendChild(tr);
+        });
+
+        // Add event listeners to delete buttons
+        const deleteButtons = commentsTbody.querySelectorAll('.delete-comment');
+        deleteButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const commentId = parseInt(btn.getAttribute('data-id'));
+            if (confirm('¿Estás seguro de que deseas eliminar este comentario?')) {
+              let currentComments = [];
+              try {
+                const stored = localStorage.getItem('oggun_trainer_comments');
+                if (stored) {
+                  currentComments = JSON.parse(stored);
+                }
+              } catch (err) {
+                console.error(err);
+              }
+              currentComments = currentComments.filter(item => item.id !== commentId);
+              localStorage.setItem('oggun_trainer_comments', JSON.stringify(currentComments));
+              renderTrainerComments();
+            }
+          });
+        });
+      };
+
+      // Call render function
+      renderTrainerComments();
     });
   </script>
 </body>
