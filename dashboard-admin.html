@@ -384,9 +384,9 @@
             {
               id: 1,
               trainer: 'Eduardo Ayala',
-              user: 'Juan Pérez',
+              user: 'Carlos Ruiz',
               rating: 5,
-              comment: 'Excelente entrenador. Muy enfocado en la técnica del peso muerto y sentadilla, siempre corrige las posturas y evita lesiones.',
+              comment: 'Excelente entrenador. Muy técnico con la biomecánica de la sentadilla y peso muerto. He mejorado mucho mi postura.',
               date: '2026-06-25'
             },
             {
@@ -396,6 +396,22 @@
               rating: 4,
               comment: 'Las sesiones de entrenamiento de alta intensidad son muy dinámicas. Alan siempre nos anima a dar el máximo esfuerzo.',
               date: '2026-06-26'
+            },
+            {
+              id: 3,
+              trainer: 'Eduardo Ayala',
+              user: 'Sofía Torres',
+              rating: 3,
+              comment: 'Tiene gran conocimiento de técnica, pero a veces la zona de peso libre está demasiado llena en su horario y cuesta seguir el ritmo.',
+              date: '2026-06-26'
+            },
+            {
+              id: 4,
+              trainer: 'Alan Ayala',
+              user: 'Pedro Infante',
+              rating: 2,
+              comment: 'El entrenamiento funcional es bueno, pero el coach llegó tarde a la sesión y no completamos los tiempos.',
+              date: '2026-06-27'
             }
           ];
           localStorage.setItem('oggun_trainer_comments', JSON.stringify(comments));
@@ -408,12 +424,34 @@
           
           let stars = '⭐'.repeat(c.rating);
 
+          // Traffic light status evaluation
+          let trafficColor = '';
+          let trafficLabel = '';
+          if (c.rating >= 4) {
+            trafficColor = '#22c55e'; // Green
+            trafficLabel = 'Buen Rendimiento';
+          } else if (c.rating === 3) {
+            trafficColor = '#eab308'; // Yellow
+            trafficLabel = 'Rendimiento Regular';
+          } else {
+            trafficColor = '#ef4444'; // Red
+            trafficLabel = 'Desempeño Crítico';
+          }
+
           tr.innerHTML = `
             <td><strong style="color: var(--primary-light);">${c.trainer}</strong></td>
             <td class="highlight-white">${c.user}</td>
             <td>${c.date}</td>
-            <td><span style="font-size: 0.85rem;">${stars} (${c.rating}/5)</span></td>
-            <td style="color: var(--text-light); font-size: 0.9rem; line-height: 1.4;">${c.comment}</td>
+            <td>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="status-dot" style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: ${trafficColor}; box-shadow: 0 0 8px ${trafficColor}; flex-shrink: 0;"></span>
+                <div style="text-align: left;">
+                  <div style="font-size: 0.85rem; font-weight: 600; color: #fff;">${stars}</div>
+                  <span style="font-size: 0.7rem; color: ${trafficColor}; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">${trafficLabel}</span>
+                </div>
+              </div>
+            </td>
+            <td style="color: var(--text-light); font-size: 0.9rem; line-height: 1.4; text-align: left;">${c.comment}</td>
             <td>
               <button class="btn-action-table delete-comment" data-id="${c.id}" title="Eliminar Comentario" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2); color: #f87171; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; transition: var(--transition-fast);">
                 <i class="fas fa-trash-alt"></i>
