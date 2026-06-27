@@ -483,17 +483,17 @@
             <div class="progress-metrics-row">
               <div class="progress-metric-card">
                 <span>Último Peso Registrado</span>
-                <h3>79.2 kg</h3>
+                <h3 id="metric-peso">79.2 kg</h3>
                 <span class="change-indicator negative"><i class="fas fa-arrow-trend-down"></i> -1.3 kg este mes</span>
               </div>
               <div class="progress-metric-card">
                 <span>Porcentaje de Grasa</span>
-                <h3>14.5%</h3>
+                <h3 id="metric-grasa">14.5%</h3>
                 <span class="change-indicator negative"><i class="fas fa-arrow-trend-down"></i> -2.1% este mes</span>
               </div>
               <div class="progress-metric-card">
                 <span>Masa Magra Estimada</span>
-                <h3>67.7 kg</h3>
+                <h3 id="metric-masa-magra">67.7 kg</h3>
                 <span class="change-indicator positive"><i class="fas fa-arrow-trend-up"></i> +0.8 kg este mes</span>
               </div>
             </div>
@@ -704,6 +704,14 @@
           const statsVal = document.querySelectorAll('.stat-box .stat-val');
           if (statsVal && statsVal.length > 0) {
             statsVal[0].textContent = `${plan.bf}%`;
+          }
+
+          // Update progress metrics tab cards
+          const metricGrasa = document.getElementById('metric-grasa');
+          const metricMasaMagra = document.getElementById('metric-masa-magra');
+          if (metricGrasa) metricGrasa.textContent = `${plan.bf}%`;
+          if (metricMasaMagra && plan.lbm) {
+            metricMasaMagra.textContent = `${plan.lbm} kg`;
           }
         }
       };

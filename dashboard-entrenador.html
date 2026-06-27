@@ -282,7 +282,10 @@
               
               <!-- Result Box -->
               <div class="calc-result-box" id="calc-results">
-                <div class="calc-result-val" id="res-bf">14.5%</div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 0.5rem;">
+                  <div class="calc-result-val" id="res-bf" style="margin-bottom: 0;">14.5% <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600;">Grasa</span></div>
+                  <div class="calc-result-val" id="res-lbm" style="color: #3b82f6; margin-bottom: 0;">67.7 kg <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600;">Masa Magra</span></div>
+                </div>
                 <div style="font-size: 0.95rem; font-weight: 700; text-transform: uppercase; color: var(--text-white); margin-bottom: 0.5rem;" id="res-category">Fitness</div>
                 <div class="recommendations-box" id="res-rec">
                   <!-- Generated recommendations -->
@@ -462,10 +465,15 @@
       }
 
       // Display results
-      document.getElementById('res-bf').textContent = `${calculatedBF}%`;
+      const leanMass = parseFloat((weight * (1 - calculatedBF / 100)).toFixed(1));
+      const fatMass = parseFloat((weight - leanMass).toFixed(1));
+
+      document.getElementById('res-bf').innerHTML = `${calculatedBF}% <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Grasa</span>`;
+      document.getElementById('res-lbm').innerHTML = `${leanMass} kg <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Masa Magra</span>`;
       document.getElementById('res-category').textContent = category;
 
       let recHtml = `
+        <p><strong>Composición Corporal:</strong> Masa Magra: ${leanMass} kg | Masa Grasa: ${fatMass} kg</p>
         <p><strong>Kcal Objetivo:</strong> ${calculatedCal} kcal diarias.</p>
         <p><strong>Macros Recomendados:</strong></p>
         <div class="macro-bar-flex">
@@ -528,9 +536,13 @@ SUPLEMENTACIÓN:
 
       const coachName = JSON.parse(sessionStorage.getItem('oggun_user')).name || 'Eduardo Ayala';
 
+      const weight = parseFloat(document.getElementById('calc-weight').value) || 79.2;
+      const lbm = parseFloat((weight * (1 - calculatedBF / 100)).toFixed(1));
+
       // Create plan object
       const customPlan = {
         bf: calculatedBF,
+        lbm: lbm,
         calories: calculatedCal,
         macros: macroSplit,
         diet: dietText,
