@@ -76,72 +76,36 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     BMI CALCULATOR
+     PHYSICAL EVALUATION RESERVATION
      ========================================================================== */
-  const bmiForm = document.getElementById('bmi-form');
-  const calcResult = document.getElementById('calc-result');
-  const bmiValSpan = document.getElementById('bmi-val');
-  const bmiStatusDiv = document.getElementById('bmi-status');
-  const bmiAdviceP = document.getElementById('bmi-advice');
-
-  if (bmiForm) {
-    bmiForm.addEventListener('submit', (e) => {
+  const evaluationBookingForm = document.getElementById('evaluation-booking-form');
+  if (evaluationBookingForm) {
+    evaluationBookingForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      
-      const height = parseFloat(document.getElementById('bmi-height').value);
-      const weight = parseFloat(document.getElementById('bmi-weight').value);
-      
-      if (!height || !weight || height <= 0 || weight <= 0) {
-        alert('Por favor introduce valores de peso y altura válidos.');
+
+      const date = document.getElementById('eval-date').value;
+      const time = document.getElementById('eval-time').value;
+      const name = document.getElementById('eval-name').value.trim();
+      const phone = document.getElementById('eval-phone').value.trim();
+
+      if (!date || !time || !name || !phone) {
+        showToast('Por favor completa todos los campos para reservar.', 'remove');
         return;
       }
 
-      // Calculate BMI
-      const heightInMeters = height / 100;
-      const bmi = weight / (heightInMeters * heightInMeters);
-      const bmiRounded = bmi.toFixed(1);
-
-      // Display result value
-      bmiValSpan.textContent = bmiRounded;
-
-      // Determine classification and advice
-      let status = '';
-      let advice = '';
-      let statusColor = '';
-      let statusBg = '';
-
-      if (bmi < 18.5) {
-        status = 'Bajo Peso';
-        statusBg = 'rgba(59, 130, 246, 0.15)'; // Blue
-        statusColor = '#60a5fa';
-        advice = 'Recomendamos un plan enfocado en hipertrofia y ganancia de masa muscular, acompañado de un plan de nutrición superávit calórico. ¡En Oggun Gym tenemos la zona de peso libre ideal para ti!';
-      } else if (bmi >= 18.5 && bmi < 25) {
-        status = 'Peso Normal / Saludable';
-        statusBg = 'rgba(16, 185, 129, 0.15)'; // Green
-        statusColor = '#34d399';
-        advice = '¡Excelente! Estás en un rango saludable. Mantente en forma combinando fuerza y acondicionamiento metabólico con nuestro plan de entrenamiento funcional y clases de combate.';
-      } else if (bmi >= 25 && bmi < 30) {
-        status = 'Sobrepeso';
-        statusBg = 'rgba(245, 158, 11, 0.15)'; // Orange
-        statusColor = '#fbbf24';
-        advice = 'Un plan mixto de entrenamiento de fuerza de alta intensidad (HIIT) y déficit calórico estructurado te ayudará a recomponer tu cuerpo y perder grasa de forma eficiente.';
-      } else {
-        status = 'Obesidad';
-        statusBg = 'rgba(239, 68, 68, 0.15)'; // Red
-        statusColor = '#f87171';
-        advice = 'Te sugerimos un entrenamiento de fuerza progresivo de bajo impacto articular guiado y cardio metabólico moderado. La constancia forjará tu nueva versión paso a paso de forma segura.';
-      }
-
-      // Apply styles and content
-      bmiStatusDiv.textContent = status;
-      bmiStatusDiv.style.backgroundColor = statusBg;
-      bmiStatusDiv.style.borderColor = statusColor;
-      bmiStatusDiv.style.color = statusColor;
-      bmiAdviceP.textContent = advice;
-
-      // Show result card with smooth appearance
-      calcResult.style.display = 'block';
-      calcResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      // Format WhatsApp message
+      const formattedMsg = `Hola Oggun Gym, me gustaría agendar mi Evaluación Física de $15.99 para el día ${date} a las ${time}. Mi nombre es ${name} y mi celular/WhatsApp es ${phone}.`;
+      
+      // WhatsApp API Link
+      const waUrl = `https://api.whatsapp.com/send?phone=5576400882&text=${encodeURIComponent(formattedMsg)}`;
+      
+      // Show success toast
+      showToast('¡Reserva registrada! Abriendo WhatsApp para confirmar el pago...', 'success');
+      
+      setTimeout(() => {
+        window.open(waUrl, '_blank');
+        evaluationBookingForm.reset();
+      }, 1500);
     });
   }
 

@@ -257,93 +257,63 @@
   </section>
 
   <!-- ==========================================================================
-       BMI CALCULATOR SECTION
+       PHYSICAL EVALUATION RESERVATION SECTION
        ========================================================================== -->
-  <section id="calculadora" class="section calculator-section">
+  <section id="calculadora" class="section calculator-section" style="border-top: 1px solid rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.02);">
     <div class="container calculator-wrapper">
       <div class="calculator-info reveal">
-        <span class="section-subtitle">Calcula Tu IMC</span>
-        <h2>Conoce Tu Estado <span>Físico</span></h2>
+        <span class="section-subtitle">Evaluación de Composición Corporal</span>
+        <h2>Evaluación de tu <span>Estado Físico</span></h2>
         <div class="calc-price-badge" style="display: inline-block; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); color: var(--primary-light); padding: 0.35rem 0.9rem; border-radius: 4px; font-weight: 700; font-size: 0.9rem; margin-bottom: 1.25rem;">Costo de Evaluación Completa: $15.99</div>
         <p>
-          El Índice de Masa Corporal (IMC) es un indicador de referencia rápido. En Oggun Gym realizamos evaluaciones físicas detalladas (pesaje, plicometría y porcentaje de grasa) por solo **$15.99**. Ingresa tus datos abajo para calcular tu IMC básico de forma gratuita.
+          Obtén un análisis completo e individualizado de tu cuerpo realizado por nuestros entrenadores especializados (Eduardo Ayala o Alan Ayala) mediante pesaje de precisión y plicometría científica.
         </p>
         
-        <table class="bmi-table">
-          <thead>
-            <tr>
-              <th>IMC (kg/m²)</th>
-              <th>Clasificación</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Menos de 18.5</td>
-              <td>Bajo Peso</td>
-            </tr>
-            <tr>
-              <td>18.5 – 24.9</td>
-              <td>Peso Normal</td>
-            </tr>
-            <tr>
-              <td>25.0 – 29.9</td>
-              <td>Sobrepeso</td>
-            </tr>
-            <tr>
-              <td>30.0 o más</td>
-              <td>Obesidad</td>
-            </tr>
-          </tbody>
-        </table>
+        <ul style="list-style: none; padding: 0; margin: 1.5rem 0; font-size: 0.95rem; color: var(--text-light); display: flex; flex-direction: column; gap: 0.75rem; text-align: left;">
+          <li><i class="fas fa-check" style="color: var(--primary); margin-right: 10px;"></i> Plicometría de pliegues grasos subcutáneos.</li>
+          <li><i class="fas fa-check" style="color: var(--primary); margin-right: 10px;"></i> Porcentaje de grasa corporal y masa magra exacta.</li>
+          <li><i class="fas fa-check" style="color: var(--primary); margin-right: 10px;"></i> Cálculo de TDEE y gasto calórico basal.</li>
+          <li><i class="fas fa-check" style="color: var(--primary); margin-right: 10px;"></i> Recomendaciones de entrenamiento y macros.</li>
+          <li><i class="fas fa-check" style="color: var(--primary); margin-right: 10px;"></i> Dieta y suplementación enviada a tu cuenta de usuario.</li>
+        </ul>
       </div>
       
-      <div class="calculator-box reveal">
-        <h3 class="calc-title">Calculadora De IMC</h3>
-        <form id="bmi-form" class="calc-form">
+      <div class="calculator-box reveal" style="padding: 2.5rem 2rem;">
+        <h3 class="calc-title" style="font-size: 1.25rem; text-transform: uppercase; margin-bottom: 1.5rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;"><i class="fas fa-calendar-check"></i> Agendar Evaluación ($15.99)</h3>
+        <form id="evaluation-booking-form" class="calc-form">
           <div class="input-row">
             <div class="input-group">
-              <label for="bmi-weight">Peso (kg)</label>
-              <input type="number" id="bmi-weight" placeholder="Ej. 75" min="10" max="300" required>
+              <label for="eval-date">Seleccionar Día</label>
+              <input type="date" id="eval-date" required style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white);">
             </div>
             <div class="input-group">
-              <label for="bmi-height">Estatura (cm)</label>
-              <input type="number" id="bmi-height" placeholder="Ej. 175" min="50" max="250" required>
-            </div>
-          </div>
-          
-          <div class="input-row">
-            <div class="input-group">
-              <label for="bmi-age">Edad</label>
-              <input type="number" id="bmi-age" placeholder="Ej. 25" min="10" max="100">
-            </div>
-            <div class="input-group">
-              <label for="bmi-gender">Género</label>
-              <select id="bmi-gender">
-                <option value="male">Masculino</option>
-                <option value="female">Femenino</option>
+              <label for="eval-time">Seleccionar Horario</label>
+              <select id="eval-time" required style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white); font-family: var(--font-sans);">
+                <option value="" disabled selected>Elige hora...</option>
+                <option value="8:00 AM">8:00 AM</option>
+                <option value="9:00 AM">9:00 AM</option>
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="11:00 AM">11:00 AM</option>
+                <option value="12:00 PM">12:00 PM</option>
+                <option value="4:00 PM">4:00 PM</option>
+                <option value="5:00 PM">5:00 PM</option>
+                <option value="6:00 PM">6:00 PM</option>
               </select>
             </div>
           </div>
           
-          <button type="submit" class="btn btn-primary">Calcular Ahora</button>
+          <div class="form-group" style="margin-bottom: 1rem; text-align: left;">
+            <label for="eval-name" style="display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text-light); text-align: left;">Nombre Completo</label>
+            <input type="text" id="eval-name" placeholder="Ej. Juan Pérez" required style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white);">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.5rem; text-align: left;">
+            <label for="eval-phone" style="display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--text-light); text-align: left;">Teléfono / WhatsApp</label>
+            <input type="tel" id="eval-phone" placeholder="Ej. 5576400882" required style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; color: var(--text-white);">
+          </div>
+          
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem; border-radius: 8px; cursor: pointer;"><i class="fab fa-whatsapp"></i> Reservar y Pagar vía WhatsApp</button>
         </form>
-        
-        <!-- Result Panel -->
-        <div id="calc-result" class="calc-result">
-          <div class="result-header">
-            <span class="result-label">Tu IMC es:</span>
-            <span id="bmi-val" class="result-val">24.2</span>
-          </div>
-          <div id="bmi-status" class="result-status">Peso Normal</div>
-          <p id="bmi-advice" class="result-advice" style="margin-bottom: 1.25rem;">
-            Recomendamos entrenar de 3 a 4 veces por semana alternando cardio y pesas.
-          </p>
-          <div class="calc-pay-box" style="margin-top: 1.5rem; text-align: center; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 1.25rem;">
-            <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.75rem;">Obtén tu Reporte de Composición Corporal Detallado</p>
-            <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 0.75rem;">$15.99</div>
-            <a href="#contacto" class="btn btn-primary" style="padding: 0.5rem 1.25rem; font-size: 0.8rem; border-radius: 30px;">Pagar y Agendar Evaluación</a>
-          </div>
-        </div>
       </div>
     </div>
   </section>
