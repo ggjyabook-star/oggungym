@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Format WhatsApp message
-      const formattedMsg = `Hola Oggun Gym, me gustaría agendar mi Evaluación Física de $15.99 para el día ${date} a las ${time}. Mi nombre es ${name} y mi celular/WhatsApp es ${phone}.`;
+      const formattedMsg = `Hola Oggun Gym, me gustaría agendar mi Evaluación Física de $15.99 con el Coach Eduardo Ayala para el día ${date} a las ${time}. Mi nombre es ${name} y mi celular/WhatsApp es ${phone}.`;
       
       // WhatsApp API Link
       const waUrl = `https://api.whatsapp.com/send?phone=5576400882&text=${encodeURIComponent(formattedMsg)}`;

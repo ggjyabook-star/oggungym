@@ -201,6 +201,10 @@
           <div class="tab-header">
             <h2>Calculadora de Grasa Corporal & Dieta</h2>
             <p>Utiliza la fórmula oficial de la Marina de EE.UU. (US Navy) para calcular el porcentaje de grasa mediante medidas antropométricas y definir su dieta.</p>
+            <div id="coach-restriction-banner" style="display: none; margin-top: 1rem; background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.25); border-radius: 8px; padding: 0.85rem 1.25rem; color: #fef08a; font-size: 0.85rem; text-align: left; line-height: 1.4;">
+              <i class="fas fa-exclamation-triangle" style="margin-right: 8px; color: #eab308;"></i>
+              <strong>Nota de Gestión:</strong> Los Planes Personalizados ($500/mes) y Evaluaciones Físicas ($15.99) son dirigidos exclusivamente por el Coach **Eduardo Ayala**. Como staff puedes usar el asistente, pero la aprobación y firmas quedan a cargo de Eduardo.
+            </div>
           </div>
 
           <div class="calc-grid">
@@ -344,6 +348,12 @@
       const welcomeTrainerName = document.getElementById('welcome-trainer-name');
       if (trainerDisplayName) trainerDisplayName.textContent = userData.name || 'Entrenador';
       if (welcomeTrainerName) welcomeTrainerName.textContent = userData.name || 'Staff Oggun';
+
+      // Check if current coach is Alan to display restriction warning
+      if (userData.email === 'alan@oggungym.com') {
+        const restrictionBanner = document.getElementById('coach-restriction-banner');
+        if (restrictionBanner) restrictionBanner.style.display = 'block';
+      }
 
       // Load existing user custom diet to textarea if any
       loadExistingCustomDiet();
